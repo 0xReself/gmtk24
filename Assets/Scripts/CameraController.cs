@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
-{
+public class CameraController : MonoBehaviour {
     private Vector3 lastPos = Vector3.zero;
 
     [SerializeField]
@@ -28,13 +27,9 @@ public class CameraController : MonoBehaviour
     }
 
     private void HandleGridCursor() {
-        Vector3 currentGridPos = GetCenterGridPosition(GetGridPosition());
+        Vector3 currentGridPos = GetCenterGridPosition();
         Vector3 difference = currentGridPos - new Vector3(gridCursor.transform.position.x, gridCursor.transform.position.y);
 
-        
-        /*if (difference.magnitude > 1) {
-            difference = Vector3.Normalize(difference);
-        }*/
         gridCursor.transform.position += gridCursorSpeed * Time.deltaTime * difference;
     }
 
@@ -53,7 +48,7 @@ public class CameraController : MonoBehaviour
         return Vector3Int.FloorToInt(GetMousePositionInWorldSpace());
     }
 
-    public static Vector3 GetCenterGridPosition(Vector3 gridPosition) {
-        return gridPosition += new Vector3(0.5f, 0.5f);
+    public Vector3 GetCenterGridPosition() {
+        return Vector3Int.FloorToInt(GetMousePositionInWorldSpace()) + new Vector3(0.5f, 0.5f);
     }
 }
