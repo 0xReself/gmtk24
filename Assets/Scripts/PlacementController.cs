@@ -18,6 +18,9 @@ public class PlacementController : MonoBehaviour {
 
     [SerializeField]
     private CameraController cameraController;
+
+    [SerializeField]
+    private ShopManager shopManager;
     
     [SerializeField]
     private MapManager mapManager;
@@ -122,7 +125,12 @@ public class PlacementController : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             ChangeSelectedPlaceable(null, PlacingMode.Idle);
+            shopManager.CloseOpenUI();
         }
+
+        /*if (Input.GetKeyDown(KeyCode.Mouse0) && placingMode == PlacingMode.Idle) {
+            shopManager.CloseOpenUI();
+        }*/
 
         if (selectedPlaceablePrefab != null && placingMode == PlacingMode.Building) {
             HandlePlaceable();
