@@ -25,10 +25,10 @@ public class Placeable : MonoBehaviour {
     }
 
     public void SetSortingLayer(int layer) {
-        baseLayer.GetComponent<SpriteRenderer>().sortingLayerID = layer;
+        baseLayer.GetComponent<SpriteRenderer>().sortingOrder = layer;
 
         if (topLayer != null) {
-            topLayer.GetComponent<SpriteRenderer>().sortingLayerID = layer;
+            topLayer.GetComponent<SpriteRenderer>().sortingOrder = layer;
         }
     }
 
