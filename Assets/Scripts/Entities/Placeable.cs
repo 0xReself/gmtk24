@@ -26,14 +26,14 @@ public class Placeable : MonoBehaviour {
     protected GameObject topLayer;
 
     [SerializeField]
-    private float pushUp = 4;
+    protected float pushUp = 4;
     
     [SerializeField]
-    private float spawnTime = 0.2f;
+    protected float spawnTime = 0.2f;
 
-    float time_elapsed = 0;
+    protected float time_elapsed = 0;
 
-    bool animate = false;
+    protected bool animate = false;
 
     public void SetColor(Color color) {
         baseLayer.GetComponent<SpriteRenderer>().color = color;

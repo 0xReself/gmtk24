@@ -32,6 +32,10 @@ public class Belt : Placeable {
     }
 
     void Update() {
+        if (animate) {
+            HandleSpawnAnimation();
+        }
+
         (Vector2Int start, Vector2Int end) = GetCheckOffsets();
         bool startTile = true;
         GameObject startObject = mapManager.Get(startPosition + start);

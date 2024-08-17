@@ -890,7 +890,7 @@ MonoBehaviour:
   minZoom: 2
   velocity: 0
   smoothTime: 0.1
-  backgroundGrid: {fileID: 0}
+  backgroundGrid: {fileID: 740150208}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -904,7 +904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedPlaceablePrefab: {fileID: 0}
-  cameraController: {fileID: 0}
+  cameraController: {fileID: 519420033}
   mapManager: {fileID: 1713368899}
   placingMode: 0
   disabled: 0
