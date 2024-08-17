@@ -14,7 +14,7 @@ public class Extractor : ItemHolder
 
 	override protected void onUpdate()
 	{
-		if(this.items.Count < 1 && GetComponent<Placeable>().animationFinished())
+		if(this.items.Count < 1 && GetComponent<Placeable>().isAlive())
 		{
 			bool success = this.spawnItem(itemPrefab, true);
         }
