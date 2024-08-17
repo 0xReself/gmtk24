@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Placeable : MonoBehaviour {
     
+    // default 1:1 is x:y default square. can be of any different sizes
     public Vector2Int size = Vector2Int.zero;
 
     // Rotation from 0 to 4 (inclusive) multiplied by 90 to get degrees: 
     // Default rotation 0 = left to right (input to output),  1 = top to bot, 2 = right to left, 3 = down to top
+    //
+    // anchor point is top left 
     public int rotation = 0;
 
     [SerializeField]
@@ -86,5 +89,17 @@ public class Placeable : MonoBehaviour {
 
     void Update() {
         
+    }
+
+    // currently returns only one dimension of the size vector, because only quadratic shapes are supported!
+    public int getSize()
+    {
+        return size.x;
+    }
+
+    // how many times they are rotated (0 to 3)
+    public int getRotation()
+    {
+        return rotation;
     }
 }
