@@ -28,7 +28,7 @@ public class Placeable : MonoBehaviour {
         baseLayer.GetComponent<SpriteRenderer>().sortingOrder = layer;
 
         if (topLayer != null) {
-            topLayer.GetComponent<SpriteRenderer>().sortingOrder = layer;
+            topLayer.GetComponent<SpriteRenderer>().sortingOrder = layer + 1;
         }
     }
 
