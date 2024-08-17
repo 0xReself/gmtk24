@@ -142,4 +142,9 @@ public class Placeable : MonoBehaviour {
     public int GetRotation() {
         return rotation;
     }
+
+    public bool animationFinished()
+    {
+        return animate == false;
+    }
 }

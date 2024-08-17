@@ -104,12 +104,26 @@ public class ItemHolder : MonoBehaviour
 	// spawns the given item as if this item holder produced it if it has space for it and returns true
 	//
 	// otherwise returns false if the holder has no space for the item
-	public bool spawnItem(Item item)
+	//
+	// the itemprefab will also be instantiated at the current position of this itemHolder
+	public bool spawnItem(GameObject itemPrefab, bool isVisible)
 	{
-		if(items.Count > maxItems)
+		if (items.Count > maxItems || itemPrefab == null)
 		{
-			return false; 
+			return false;
 		}
+		GameObject newItem = Instantiate(itemPrefab, transform.position, Quaternion.identity);
+		if(isVisible == false)
+		{
+			newItem.GetComponent<Renderer>().enabled = false;
+		}
+		Item item = newItem.GetComponent<Item>();
+		if (item == null)
+		{
+			Debug.LogError("new item did not have a item component");
+			Destroy(newItem);
+		}
+
 		item.setNewTarget(this, -1, 0);
 		item.moveToTarget();
 		resetTargetForItem(item);
