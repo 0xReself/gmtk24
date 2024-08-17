@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.WSA;
@@ -87,9 +88,10 @@ public class ItemHolder : MonoBehaviour
 	// if this item holder can currently accept another items (sub class can add custom behaviour, but must return super.canAcceptItem) 
 	//
 	// for example conveyor belts may want to override this, because they have multiple inputs, but only one output, but cant connect to multiple other belts (for example edges must connect!)
+	// or crafting machines may only accept specific items
 	public virtual bool canAcceptItem(Item item, int connectionSidePosition)
 	{
-		return items.Count <= maxItems && getConnectionSides()[connectionSidePosition] == ConnectionSide.input;
+		return items.Count < maxItems && getConnectionSides()[connectionSidePosition] == ConnectionSide.input;
 	}
 
 	// An item is given to this item holder (sub class can add custom behaviour, but must return super.acceptItem)
@@ -164,7 +166,7 @@ public class ItemHolder : MonoBehaviour
 			return null; 
 		}
 		int direction = (outputSide + (size-1) % (size * 4)) / size; // 0=left, 1=top, 2=right, 3=bot
-		int steps = (outputSide + size - 1) % size; // clowckwise: top: 0,1,2  right : 0,1,2   bot: 0,2,1   left 0,1,2 
+		int steps = (outputSide + size - 1) % size; // clockwise: top: 0,1,2  right : 0,1,2   bot: 0,2,1   left 0,1,2 
 		int xOffset = 0;
 		int yOffset = 0;
 
@@ -189,14 +191,38 @@ public class ItemHolder : MonoBehaviour
 		}
 
 		Vector2Int targetPos = new Vector2Int(position.x + xOffset, position.y + yOffset); // where the other item holder should be!
+		setMapManager();
 		GameObject target = mapManager.Get(targetPos);
 		if(target != null)
 		{
 			ItemHolder otherHolder = target.GetComponent<ItemHolder>();
 			if (otherHolder != null)
 			{
-				// todo: canAcceptItem
-				return new TargetInformation(otherHolder, outputSide, 0);
+				int otherSize = target.GetComponent<Placeable>().GetSize();
+				int otherInputSide = 0;
+				switch (direction)
+				{
+					case 0: //left to right 
+						xOffset = -1;
+						yOffset = steps + 1 - size;
+						break;
+					case 1: // top to bot 
+						yOffset = 1;
+						xOffset = steps;
+						break;
+					case 2: // right to left 
+						xOffset = size;
+						yOffset = -steps;
+						break;
+					case 3: // bot to top 
+						yOffset = -size;
+						xOffset = size - steps - 1;
+						break;
+				}
+				if(items.Count > 0 && otherHolder.canAcceptItem(items.ElementAt(0), otherInputSide))
+				{
+					return new TargetInformation(otherHolder, outputSide, otherInputSide);
+				}
 			}
 		}
 		return null;
@@ -226,8 +252,8 @@ public class ItemHolder : MonoBehaviour
 			if (item.canBeProcessed())
 			{
 				item.process(processingSpeed * Time.deltaTime);
-
-				item.transform.position = this.transform.position; // todo: temp for testing
+				// todo: temp for testing
+				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10 * Time.deltaTime);
 
 			}
 			if (item.isProcessed())
@@ -262,20 +288,26 @@ public class ItemHolder : MonoBehaviour
 
 	void Start()
 	{
+		setMapManager();
 		onStart();
 	}
 
 	void Update()
 	{
-		if(mapManager == null)
-		{
-			mapManager = GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>();
-		}
+		setMapManager();
 		if (canProcessItems())
 		{
 			processItems();
 		}
 		onUpdate();
+	}
+
+	private void setMapManager()
+	{
+		if (mapManager == null)
+		{
+			mapManager = GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>(); // buggy, why unity? 
+		}
 	}
 
 	// map manager is still null here

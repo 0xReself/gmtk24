@@ -45,7 +45,15 @@ public class Item : MonoBehaviour
 		this.nextOutputHolder = null;
 		this.outputSide = 0;
 		this.connectedTargetInputSide = 0;
-		currentHolder.acceptItem(this, connectedTargetInputSide);
+		if(currentHolder== null)
+		{
+			Debug.LogError("Item did not have a next holder");
+			delete();
+		}
+		else
+		{
+			currentHolder.acceptItem(this, connectedTargetInputSide);
+		}
 	}
 
 	// sets a new target item holder where the item will move to next (this will be called from the acceptItem from the item holder through moveToTarget)
