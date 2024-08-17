@@ -13,21 +13,27 @@ public class ItemButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     [SerializeField]
     private ShopManager shopManager;
+
+    [SerializeField]
+    protected AudioSource hover;
+
+    [SerializeField]
+    protected AudioSource click;
     
     public void OnPointerClick(PointerEventData eventData) {
+        click.Play();
         this.GetComponent<Image>().color = new Color(0.09f, 0.09f, 0.09f, 0.0f);
         shopManager.CloseOpenUI();
         placementController.disabled = false;
         placementController.ChangeSelectedPlaceable(objectPrefab, PlacingMode.Building);
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
+    public void OnPointerEnter(PointerEventData eventData) {
+        hover.Play();
         this.GetComponent<Image>().color = new Color(0.09f, 0.09f, 0.09f, 1f);
     }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
+    public void OnPointerExit(PointerEventData eventData) {
         this.GetComponent<Image>().color = new Color(0.09f, 0.09f, 0.09f, 0.0f);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -20,7 +21,7 @@ public class Placeable : MonoBehaviour {
     public int rotation = 0;
 
     [SerializeField]
-    private GameObject baseLayer;
+    protected GameObject baseLayer;
 
     [SerializeField]
     protected GameObject topLayer;
@@ -62,6 +63,9 @@ public class Placeable : MonoBehaviour {
         }
     }
 
+    public virtual void OnClickDown() {}
+    public virtual void OnClickUp() {}
+
     public void Rotate() {
         if (topLayer == null) {
             return;
@@ -90,20 +94,7 @@ public class Placeable : MonoBehaviour {
 
     public Vector2Int GetEndPosition(Vector2Int startPosition) {
         Vector2Int sizedFixed = size - Vector2Int.one;
-
-        switch (rotation) {
-            case 1:
-                return new Vector2Int(startPosition.x + sizedFixed.y, startPosition.y + sizedFixed.x);
-                
-            case 2:
-                return new Vector2Int(startPosition.x - sizedFixed.x, startPosition.y + sizedFixed.y);
-
-            case 3:
-                return new Vector2Int(startPosition.x - sizedFixed.y, startPosition.y - sizedFixed.x);
-
-            default:
-                return new Vector2Int(startPosition.x + sizedFixed.x, startPosition.y - sizedFixed.y);
-        }
+        return new Vector2Int(startPosition.x + sizedFixed.x, startPosition.y - sizedFixed.y);
     }
 
     void Start() {}

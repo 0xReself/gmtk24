@@ -19,6 +19,7 @@ public class DeleteButton : CategoryButton {
     }
 
     public override void OnPointerClick(PointerEventData eventData) {
+        clicked.Play();
         if (activated == true) {
             shopManager.CloseOpenUI();
             placementController.ChangeSelectedPlaceable(null, PlacingMode.Idle);
