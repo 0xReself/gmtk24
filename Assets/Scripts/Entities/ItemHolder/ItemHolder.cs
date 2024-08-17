@@ -144,10 +144,14 @@ public class ItemHolder : MonoBehaviour
 		{
 			return null; 
 		}
+		Vector2Int position = GetComponent<Placeable>().startPosition;
+
+
+
 
 		return new TargetInformation(null, outputSide, 0);
 
-		//GetComponent<Placeable>().GetEndPosition();
+
 		//
 		//mapManager.Get();
 		//
@@ -179,7 +183,10 @@ public class ItemHolder : MonoBehaviour
 
 			if (item.canBeProcessed())
 			{
-				item.process(processingSpeed);
+				item.process(processingSpeed * Time.deltaTime);
+
+				item.transform.position = this.transform.position; // todo: temp for testing
+
 			}
 			if (item.isProcessed())
 			{
@@ -212,6 +219,7 @@ public class ItemHolder : MonoBehaviour
 	void Start()
 	{
 		mapManager = GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>();
+		onStart();
 	}
 
 	void Update()
@@ -220,5 +228,16 @@ public class ItemHolder : MonoBehaviour
 		{
 			processItems();
 		}
+		onUpdate();
+	}
+
+	protected virtual void onStart()
+	{
+
+	}
+
+	protected virtual void onUpdate()
+	{
+
 	}
 }

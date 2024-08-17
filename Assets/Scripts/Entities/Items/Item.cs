@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.WSA;
+using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEditor.FilePathAttribute;
 using static UnityEditor.Progress;
 
@@ -9,11 +10,15 @@ public class Item : MonoBehaviour
 {
 
 	[SerializeField]
+	// the image to render the item
+	protected GameObject sprite;
+
+	[SerializeField]
 	// The amount of time it takes for item holders to process this item  
-	private int processingTime = 0;
+	private double processingTime = 0;
 
 	// the remaining time it takes to process the item within the current item holder 
-	private int remainingProcessingTime = 0;
+	private double remainingProcessingTime = 0;
 
 	// in which holder the item is currently in
 	private ItemHolder currentHolder;
@@ -52,7 +57,7 @@ public class Item : MonoBehaviour
 	}
 
 	// called by the holder to proccess the item
-	public virtual void process(int speed)
+	public virtual void process(double speed)
 	{
 		if(currentHolder != null)
 		{
@@ -93,12 +98,12 @@ public class Item : MonoBehaviour
 
 	void Start()
 	{
-
+		onStart();
 	}
 
 	void Update()
 	{
-
+		onUpdate();
 	}
 
 	// where the item arrived on the current holder
@@ -111,5 +116,15 @@ public class Item : MonoBehaviour
 	public int getOutputSide()
 	{
 		return outputSide;
+	}
+
+	protected virtual void onStart()
+	{
+		sprite.GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
+	}
+
+	protected virtual void onUpdate()
+	{
+
 	}
 }
