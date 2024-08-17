@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1732346506961217145}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.065, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: b5be490b947b25f428f642bb6f9c7a3c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -156,7 +156,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2c241057f1aee2344849dc0f03c535ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -312,15 +312,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0}
-  size: {x: 0, y: 0}
+  size: {x: 1, y: 1}
   rotation: 0
-  baseLayer: {fileID: 0}
-  topLayer: {fileID: 0}
-  pushUp: 4
+  baseLayer: {fileID: 2647093791711076130}
+  topLayer: {fileID: 1732346506961217145}
+  pushUp: 2
   spawnTime: 0.2
   mapManager: {fileID: 0}
   topLayers:
-  - {fileID: 2800000, guid: b5be490b947b25f428f642bb6f9c7a3c, type: 3}
-  - {fileID: 2800000, guid: e82ce9d7b4d01814f84d50a5503d28a8, type: 3}
-  - {fileID: 2800000, guid: 6d991d8815cd5f742b5421bb962f49a1, type: 3}
-  - {fileID: 2800000, guid: 5611e920b105987438068e6b5a52f3d1, type: 3}
+  - {fileID: 21300000, guid: b5be490b947b25f428f642bb6f9c7a3c, type: 3}
+  - {fileID: 21300000, guid: e82ce9d7b4d01814f84d50a5503d28a8, type: 3}
+  - {fileID: 21300000, guid: 6d991d8815cd5f742b5421bb962f49a1, type: 3}
+  - {fileID: 21300000, guid: 5611e920b105987438068e6b5a52f3d1, type: 3}
+  openEnd: 1

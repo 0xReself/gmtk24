@@ -23,7 +23,7 @@ public class Placeable : MonoBehaviour {
     private GameObject baseLayer;
 
     [SerializeField]
-    private GameObject topLayer;
+    protected GameObject topLayer;
 
     [SerializeField]
     private float pushUp = 4;
@@ -89,19 +89,15 @@ public class Placeable : MonoBehaviour {
         Vector2Int sizedFixed = size - Vector2Int.one;
 
         switch (rotation) {
-            //Right
             case 1:
                 return new Vector2Int(startPosition.x + sizedFixed.y, startPosition.y + sizedFixed.x);
-              
-            //Top
+                
             case 2:
                 return new Vector2Int(startPosition.x - sizedFixed.x, startPosition.y + sizedFixed.y);
 
-            //Left
             case 3:
                 return new Vector2Int(startPosition.x - sizedFixed.y, startPosition.y - sizedFixed.x);
 
-            //Default rotation splitter goes down e.g.
             default:
                 return new Vector2Int(startPosition.x + sizedFixed.x, startPosition.y - sizedFixed.y);
         }
