@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MapManager : MonoBehaviour {
@@ -10,9 +12,7 @@ public class MapManager : MonoBehaviour {
         map = new Dictionary<Vector2Int, GameObject>();
     }
 
-    void Update() {
-        
-    }
+    void Update() {}
 
     public bool CanPlace(Vector2Int start, Vector2Int end) {
         for(int x = Mathf.Min(start.x, end.x); x <= Mathf.Max(start.x, end.x); x++) {

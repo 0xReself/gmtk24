@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 
 public enum PlacingMode {
@@ -24,8 +25,7 @@ public class PlacementController : MonoBehaviour {
     [SerializeField]
     public PlacingMode placingMode;
 
-    private GameObject placingObject;
-    private Placeable placeable;
+    private GameObject previewObject;
 
     public bool disabled = false;
 
@@ -33,29 +33,28 @@ public class PlacementController : MonoBehaviour {
 
     void Start() {
         cameraController = this.GetComponent<CameraController>();
-        ResetPlacingObject();
     }
 
     public void ChangeSelectedPlaceable(GameObject prefab, PlacingMode placingMode) {
         this.placingMode = placingMode;
         selectedPlaceablePrefab = prefab;
-        Destroy(placingObject);
-        ResetPlacingObject();
+        Destroy(previewObject);
+        InitiatePreview();
     }
 
-    private void ResetPlacingObject() {
+    private void InitiatePreview() {
         if (selectedPlaceablePrefab == null) {
             return;
         }
 
-        placingObject = Instantiate(selectedPlaceablePrefab, cameraController.GetCenterGridPosition(), Quaternion.identity);
-        placeable = placingObject.GetComponent<Placeable>();
+        previewObject = Instantiate(selectedPlaceablePrefab, cameraController.GetCenterGridPosition(), Quaternion.identity);
 
-        if (placeable == null) {
+        if (previewObject.GetComponent<Placeable>() == null) {
             Debug.LogError("Trying to place object with no Placeable script!");
         }
 
-        placeable.Rotate(currentRotation);
+        previewObject.GetComponent<Placeable>().Rotate(currentRotation);
+        previewObject.GetComponent<Placeable>().SetSortingLayer(-100000000);
     }
 
     private Vector2Int ToVector2Int(Vector3 vector) {
@@ -67,17 +66,20 @@ public class PlacementController : MonoBehaviour {
 
     private void Place(Placeable placeable, Vector2Int start, Vector2Int end) {
         placeable.SetColor(new Color(1f, 1f, 1f, 1f));
-        if (mapManager.Get(start) != null) {
-            return;
-        }
 
-        mapManager.Set(placingObject, start, end);
+        GameObject placedObject = Instantiate(selectedPlaceablePrefab, cameraController.GetCenterGridPosition(), Quaternion.identity);
+        Placeable _placeable = placedObject.GetComponent<Placeable>();
+        _placeable.SetSortingLayer(-(int)cameraController.GetGridPosition().y);
+        _placeable.startPosition = start;
+        _placeable.StartSpawn();
+        _placeable.Rotate(currentRotation);
 
-        ResetPlacingObject();
+        mapManager.Set(placedObject, start, end);
     }
+
     private void HandlePlaceable() {
-        placingObject.transform.position = cameraController.GetCenterGridPosition();
-        placeable.SetSortingLayer(-(int)cameraController.GetGridPosition().y);
+        previewObject.transform.position = cameraController.GetCenterGridPosition();
+        Placeable placeable = previewObject.GetComponent<Placeable>();
 
         Vector2Int positionStart = ToVector2Int(cameraController.GetGridPosition());
         Vector2Int positionEnd = placeable.GetEndPosition(positionStart);
@@ -85,9 +87,9 @@ public class PlacementController : MonoBehaviour {
         bool canPlace = mapManager.CanPlace(positionStart, positionEnd);
 
         if (!canPlace) {
-            placeable.SetColor(new Color(1f, 0.25f, 0.25f));
+            placeable.SetColor(new Color(1f, 0.25f, 0.25f, 0.8f));
         } else {
-            placeable.SetColor(new Color(1f, 1f, 1f, 0.5f));
+            placeable.SetColor(new Color(1f, 1f, 1f, 0.8f));
         }
 
         if (Input.GetKey(KeyCode.Mouse0) && canPlace && !disabled) {
@@ -103,7 +105,7 @@ public class PlacementController : MonoBehaviour {
             Placeable _placeable = placedObject.GetComponent<Placeable>();
 
             if(Input.GetKey(KeyCode.Mouse0) && ! disabled) {
-                mapManager.Remove(position, _placeable.GetEndPosition(position));
+                mapManager.Remove(_placeable.startPosition, _placeable.GetEndPosition(_placeable.startPosition));
                 Destroy(placedObject);
             }
         }
@@ -111,7 +113,7 @@ public class PlacementController : MonoBehaviour {
 
     private void HandleRotation() {
         if (Input.GetKeyDown(KeyCode.R)) {
-            Placeable placeable = placingObject.GetComponent<Placeable>();
+            Placeable placeable = previewObject.GetComponent<Placeable>();
             placeable.Rotate();
             currentRotation = placeable.rotation;
         }
