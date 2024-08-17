@@ -18,11 +18,17 @@ public class ItemHolder : MonoBehaviour
 		output,
 	}
 
-	private class TargetInformation
+	public class TargetInformation
 	{
 		public ItemHolder targetHolder;
 		public int myOutputSide;
 		public int otherInputSide;
+		public TargetInformation(ItemHolder targetHolder, int myOutputSide, int otherInputSide)
+		{
+			this.targetHolder = targetHolder;
+			this.myOutputSide = myOutputSide;
+			this.otherInputSide = otherInputSide;
+		}
 	}
 
 	private MapManager mapManager;
@@ -138,13 +144,16 @@ public class ItemHolder : MonoBehaviour
 		{
 			return null; 
 		}
-		GetComponent<Placeable>().GetEndPosition();
 
-		mapManager.Get();
+		return new TargetInformation(null, outputSide, 0);
 
-
-
-		canAcceptItem 
+		//GetComponent<Placeable>().GetEndPosition();
+		//
+		//mapManager.Get();
+		//
+		//
+		//
+		//canAcceptItem 
 	}
 
 	// can be overridden if for example this item holder needs at least n and m items of a specific type to be able to process 
