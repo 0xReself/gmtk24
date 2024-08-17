@@ -138,14 +138,12 @@ public class Placeable : MonoBehaviour {
     }
 
     // currently returns only one dimension of the size vector, because only quadratic shapes are supported!
-    public int getSize()
-    {
+    public int GetSize() {
         return size.x;
     }
 
     // how many times they are rotated (0 to 3)
-    public int getRotation()
-    {
+    public int GetRotation() {
         return rotation;
     }
 }

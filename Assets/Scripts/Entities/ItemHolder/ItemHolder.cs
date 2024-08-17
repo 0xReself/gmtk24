@@ -71,7 +71,7 @@ public class ItemHolder : MonoBehaviour
 			}
 			else
 			{
-				int shift = placeable.getSize() * placeable.getRotation();
+				int shift = placeable.GetSize() * placeable.GetRotation();
 				cachedConnections = new ConnectionSide[defaultConnections.Length];
 				for (int i = 0; i < defaultConnections.Length; ++i)
 				{
