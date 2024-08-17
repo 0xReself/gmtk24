@@ -1,9 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Placeable : MonoBehaviour {
     
+    public Vector2Int startPosition = Vector2Int.zero;
+
     public Vector2Int size = Vector2Int.zero;
 
     // Rotation from 0 to 4 (inclusive) multiplied by 90 to get degrees: 
@@ -15,6 +20,16 @@ public class Placeable : MonoBehaviour {
 
     [SerializeField]
     private GameObject topLayer;
+
+    [SerializeField]
+    private float pushUp = 4;
+    
+    [SerializeField]
+    private float spawnTime = 0.2f;
+
+    float time_elapsed = 0;
+
+    bool animate = false;
 
     public void SetColor(Color color) {
         baseLayer.GetComponent<SpriteRenderer>().color = color;
@@ -29,6 +44,14 @@ public class Placeable : MonoBehaviour {
 
         if (topLayer != null) {
             topLayer.GetComponent<SpriteRenderer>().sortingOrder = layer + 1;
+        }
+    }
+
+    private void SetOpacity(float opacity) {
+        baseLayer.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, opacity);
+        
+        if (topLayer != null) {
+            topLayer.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, opacity);
         }
     }
 
@@ -80,11 +103,33 @@ public class Placeable : MonoBehaviour {
         }
     }
 
-    void Start() {
-        
-    }
+    void Start() {}
 
     void Update() {
-        
+        if (animate) {
+            HandleSpawnAnimation();
+        }
+    }
+
+    public void HandleSpawnAnimation() {
+        float spawnStartY = startPosition.y + pushUp;
+        float delta = 1 - Mathf.Sqrt(1 - time_elapsed / spawnTime);
+        float newY = Mathf.Lerp(spawnStartY, startPosition.y + 0.5f, delta);
+        SetOpacity(delta);
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+
+        time_elapsed += Time.deltaTime;
+        if (time_elapsed > spawnTime) {
+            this.GetComponent<AudioSource>().Play();
+            SetOpacity(1);
+            transform.position = new Vector3(startPosition.x + 0.5f, startPosition.y + 0.5f);
+            animate = false;
+            return;
+        }
+    }
+
+    public void StartSpawn() {
+        animate = true;
+        time_elapsed = 0;
     }
 }

@@ -890,6 +890,7 @@ MonoBehaviour:
   minZoom: 2
   velocity: 0
   smoothTime: 0.1
+  backgroundGrid: {fileID: 740150208}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1000,7 +1001,7 @@ GameObject:
   - component: {fileID: 740150210}
   - component: {fileID: 740150209}
   m_Layer: 0
-  m_Name: Background Grid
+  m_Name: BackgroundGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
