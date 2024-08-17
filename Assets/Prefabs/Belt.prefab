@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 1761733761880910958}
   - component: {fileID: 9128226835779663463}
   - component: {fileID: 2601171622769554247}
+  - component: {fileID: 7412221889517939678}
   m_Layer: 0
   m_Name: Belt
   m_TagString: Untagged
@@ -325,3 +326,18 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6d991d8815cd5f742b5421bb962f49a1, type: 3}
   - {fileID: 21300000, guid: 5611e920b105987438068e6b5a52f3d1, type: 3}
   openEnd: 1
+--- !u!114 &7412221889517939678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732090125897960743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c34c46d1410d5bc4da387b3d6465251d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultConnections: 01000000010000000200000001000000
+  maxItems: 1
+  processingSpeed: 2
