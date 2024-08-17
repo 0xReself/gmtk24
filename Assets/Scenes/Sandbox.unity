@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 129205250}
   - component: {fileID: 129205249}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Place_Belt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1501,7 +1501,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: cbe71558c724f25438fb4a4abe1e7f8c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d174840576fe6104d8aa5f2f8e5a08a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1509,7 +1509,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1545836669
@@ -1526,7 +1526,7 @@ GameObject:
   - component: {fileID: 1545836672}
   - component: {fileID: 1545836671}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Place_Splitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1707,7 +1707,7 @@ GameObject:
   - component: {fileID: 1766280659}
   - component: {fileID: 1766280658}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Place_Extractor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

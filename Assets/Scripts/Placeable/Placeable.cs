@@ -8,6 +8,8 @@ public class Placeable : MonoBehaviour {
     public Vector2Int size = Vector2Int.zero;
 
     [SerializeField]
+    /// Rotation from 0 to 4 (inclusive) multiplied by 90 to get degrees: 
+    /// Default rotation 0 = left to right (input to output),  1 = top to bot, 2 = right to left, 3 = down to top
     public int rotation = 0;
 
     [SerializeField]
