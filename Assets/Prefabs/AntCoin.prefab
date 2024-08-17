@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2587990701677329799}
   - component: {fileID: 4764169032774774202}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1435673837
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e090ce21859ec8c43a16c7b34ddeaa26, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1761733761880910958}
   - component: {fileID: 6990463502996948226}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AntCoin
   m_TagString: Untagged
   m_Icon: {fileID: 0}

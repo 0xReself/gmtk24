@@ -120,7 +120,7 @@ public class Item : MonoBehaviour
 
 	protected virtual void onStart()
 	{
-		sprite.GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
+
 	}
 
 	protected virtual void onUpdate()
