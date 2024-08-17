@@ -890,7 +890,7 @@ MonoBehaviour:
   minZoom: 2
   velocity: 0
   smoothTime: 0.1
-  backgroundGrid: {fileID: 740150208}
+  backgroundGrid: {fileID: 0}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1668,7 +1668,7 @@ GameObject:
   - component: {fileID: 1713368899}
   m_Layer: 0
   m_Name: MapManager
-  m_TagString: Untagged
+  m_TagString: MapManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
