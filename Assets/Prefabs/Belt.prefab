@@ -131,4 +131,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 1, y: 1}
   rotation: 0
-  spriteRenderer: {fileID: 5507380347881479711}
+  baseLayer: {fileID: 2647093791711076130}
+  topLayer: {fileID: 0}

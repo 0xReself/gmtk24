@@ -11,24 +11,51 @@ public class Placeable : MonoBehaviour {
     public int rotation = 0;
 
     [SerializeField]
-    public SpriteRenderer spriteRenderer;
+    private GameObject baseLayer;
+
+    [SerializeField]
+    private GameObject topLayer;
+
+    public void SetColor(Color color) {
+        baseLayer.GetComponent<SpriteRenderer>().color = color;
+        
+        if (topLayer != null) {
+            topLayer.GetComponent<SpriteRenderer>().color = color;
+        }
+    }
+
+    public void SetSortingLayer(int layer) {
+        baseLayer.GetComponent<SpriteRenderer>().sortingLayerID = layer;
+
+        if (topLayer != null) {
+            topLayer.GetComponent<SpriteRenderer>().sortingLayerID = layer;
+        }
+    }
 
     public void Rotate() {
+        if (topLayer == null) {
+            return;
+        }
+
         rotation += 1;
         if (rotation >= 4) {
             rotation = 0;
         }
 
-        this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotation * 90));
+        topLayer.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -rotation * 90));
     }
 
     public void Rotate(int rotations) {
+        if (topLayer == null) {
+            return;
+        }
+
         rotation += rotations;
         if (rotation >= 4) {
             rotation = 0;
         }
 
-        this.transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotation * 90));
+        topLayer.transform.rotation = Quaternion.Euler(new Vector3(0, 0, -rotation * 90));
     }
 
     public Vector2Int GetEndPosition(Vector2Int startPosition) {

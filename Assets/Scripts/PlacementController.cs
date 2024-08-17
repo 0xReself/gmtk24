@@ -66,7 +66,7 @@ public class PlacementController : MonoBehaviour {
     }
 
     private void Place(Placeable placeable, Vector2Int start, Vector2Int end) {
-        placeable.spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+        placeable.SetColor(new Color(1f, 1f, 1f, 1f));
         if (mapManager.Get(start) != null) {
             return;
         }
@@ -77,7 +77,7 @@ public class PlacementController : MonoBehaviour {
     }
     private void HandlePlaceable() {
         placingObject.transform.position = cameraController.GetCenterGridPosition();
-        placeable.spriteRenderer.sortingOrder = -(int)cameraController.GetGridPosition().y;
+        placeable.SetSortingLayer(-(int)cameraController.GetGridPosition().y);
 
         Vector2Int positionStart = ToVector2Int(cameraController.GetGridPosition());
         Vector2Int positionEnd = placeable.GetEndPosition(positionStart);
@@ -85,9 +85,9 @@ public class PlacementController : MonoBehaviour {
         bool canPlace = mapManager.CanPlace(positionStart, positionEnd);
 
         if (!canPlace) {
-            placeable.spriteRenderer.color = new Color(1f, 0.25f, 0.25f);
+            placeable.SetColor(new Color(1f, 0.25f, 0.25f));
         } else {
-            placeable.spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+            placeable.SetColor(new Color(1f, 1f, 1f, 0.5f));
         }
 
         if (Input.GetKey(KeyCode.Mouse0) && canPlace && !disabled) {
