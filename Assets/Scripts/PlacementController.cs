@@ -87,9 +87,9 @@ public class PlacementController : MonoBehaviour {
         bool canPlace = mapManager.CanPlace(positionStart, positionEnd);
 
         if (!canPlace) {
-            placeable.SetColor(new Color(1f, 0.25f, 0.25f));
+            placeable.SetColor(new Color(1f, 0.25f, 0.25f, 0.8f));
         } else {
-            placeable.SetColor(new Color(1f, 1f, 1f, 0.5f));
+            placeable.SetColor(new Color(1f, 1f, 1f, 0.8f));
         }
 
         if (Input.GetKey(KeyCode.Mouse0) && canPlace && !disabled) {
@@ -105,7 +105,7 @@ public class PlacementController : MonoBehaviour {
             Placeable _placeable = placedObject.GetComponent<Placeable>();
 
             if(Input.GetKey(KeyCode.Mouse0) && ! disabled) {
-                mapManager.Remove(position, _placeable.GetEndPosition(position));
+                mapManager.Remove(_placeable.startPosition, _placeable.GetEndPosition(_placeable.startPosition));
                 Destroy(placedObject);
             }
         }
