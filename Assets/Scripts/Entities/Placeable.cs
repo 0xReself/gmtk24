@@ -35,6 +35,9 @@ public class Placeable : MonoBehaviour {
 
     protected bool animate = false;
 
+    // preview 
+    protected bool isPreview = true;
+
     public void SetColor(Color color) {
         baseLayer.GetComponent<SpriteRenderer>().color = color;
         
@@ -131,6 +134,7 @@ public class Placeable : MonoBehaviour {
     public void StartSpawn() {
         animate = true;
         time_elapsed = 0;
+        isPreview = false;
     }
 
     // currently returns only one dimension of the size vector, because only quadratic shapes are supported!
@@ -141,5 +145,11 @@ public class Placeable : MonoBehaviour {
     // how many times they are rotated (0 to 3)
     public int GetRotation() {
         return rotation;
+    }
+
+    // if this is finished animating and is not a preview
+    public bool isAlive()
+    {
+        return animate == false && isPreview == false;
     }
 }

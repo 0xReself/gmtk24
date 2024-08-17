@@ -36,19 +36,19 @@ public class Item : MonoBehaviour
 
 	// resets the processing time of this item (when it arrives at a new item holder). and shifts from current to next item holder 
 	//
-	// this also calls acceptitem on the next holder 
+	// this also calls acceptitem on the next holder which also calls setNewTarget
 	public void moveToTarget()
 	{
-		nextOutputHolder.acceptItem(this, connectedTargetInputSide);
 		remainingProcessingTime = processingTime;
 		this.currentHolder = nextOutputHolder;
 		this.inputSide = connectedTargetInputSide;
 		this.nextOutputHolder = null;
 		this.outputSide = 0;
 		this.connectedTargetInputSide = 0;
+		currentHolder.acceptItem(this, connectedTargetInputSide);
 	}
 
-	// sets a new target item holder where the item will move to next
+	// sets a new target item holder where the item will move to next (this will be called from the acceptItem from the item holder through moveToTarget)
 	public void setNewTarget(ItemHolder target, int outputSide, int connectedTargetInputSide)
 	{
 		this.nextOutputHolder = target;
@@ -126,5 +126,22 @@ public class Item : MonoBehaviour
 	protected virtual void onUpdate()
 	{
 
+	}
+
+	public override string ToString()
+	{
+		string current = "null";
+		if (currentHolder != null)
+		{
+			current = currentHolder.ToString();
+		}
+		string target = "null";
+		if(nextOutputHolder != null)
+		{
+			target = nextOutputHolder.ToString();
+		}
+
+		return "Item{current holder: " + current + ", next holder: " + target + ", remainingProcessingTime: " + 
+			remainingProcessingTime + ", inputSide: " + inputSide + ", outputSide: " + outputSide + ", connectedTargetInputSide: " + connectedTargetInputSide +  "}";
 	}
 }

@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 1761733761880910958}
   - component: {fileID: 1000586696892187106}
   - component: {fileID: 4212272443480359607}
+  - component: {fileID: -3942272326231034889}
   m_Layer: 0
   m_Name: Extractor
   m_TagString: Untagged
@@ -233,3 +234,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-3942272326231034889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732090125897960743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819699b457066e24baee6d16f20c4c21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultConnections: 00000000000000000200000000000000
+  maxItems: 1
+  processingSpeed: 10
+  itemPrefab: {fileID: 6732090125897960743, guid: 18797153958b7d44e8a4538c7e43e9f7, type: 3}
