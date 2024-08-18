@@ -9,6 +9,7 @@ TagManager:
   - ItemManager
   - UIToClose
   - UIManager
+  - ResourceManager
   layers:
   - Default
   - TransparentFX

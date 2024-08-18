@@ -25,7 +25,14 @@ public class Core : Placeable {
 
     private bool hover = false;
 
+    [SerializeField]
+    private ResourceManager resourceManager;
+    void Awake() {
+        resourceManager = GameObject.FindGameObjectWithTag("ResourceManager").GetComponent<ResourceManager>();
+    }
+    
     public override void OnClickDown() {
+        resourceManager.AddResource(Resource.Azurite, 1);
         if(firstClick == true) {
             infoText.SetActive(false);
             firstClick = false;
@@ -61,7 +68,13 @@ public class Core : Placeable {
 
     // Update is called once per frame
     void Update() {
-        
+        if(Input.GetKeyDown(KeyCode.Space)) {
+            OnClickDown();
+        }
+
+        if(Input.GetKeyUp(KeyCode.Space)) {
+            OnClickUp();
+        }
     }
 
 }
