@@ -70,6 +70,7 @@ public class ItemManager : MonoBehaviour
 		if (itemClass == typeof(EmberEssence)) return emberEssencePrefab;
 		if (itemClass == typeof(MoonlightEssence)) return moonlightEssencePrefab;
 
+		Debug.Log("Did not find matching item prefab for " + itemClass);
 		return null; 
 	}
 
@@ -95,6 +96,8 @@ public class ItemManager : MonoBehaviour
 		if (item is MoonlightEssence) return (Resource.Moonlight, essenceResourceAmount);
 
 		if (item is AntCoin) return (Resource.ALL, shardResourceAmount + fragmentResourceAmount + essenceResourceAmount);
+
+		Debug.Log("Did not find matching resource " + item);
 		return (Resource.NONE, 0); // needs default return 
 	}
 	
