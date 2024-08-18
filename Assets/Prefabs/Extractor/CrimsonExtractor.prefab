@@ -216,6 +216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc1721e12ca3414295c3ab9be9968cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourcesToBuy: 0000000001000000
+  resourceAmount: 10270000e8030000
   startPosition: {x: 0, y: 0}
   size: {x: 1, y: 1}
   rotation: 0
