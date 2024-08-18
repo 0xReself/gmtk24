@@ -17,6 +17,9 @@ public class Crafter : ItemHolder
 	// this is set from the recipe and displays the remaining time it takes to craft 
 	private float remainingProcessTime = 0;
 
+	// internal counter used to swap between the two outputs if both outputs should receive the same material
+	private int sameOutputLoadBalancer = 0;
+
 	public override bool canAcceptItem(Item item, int connectionSidePosition, ItemHolder otherHolder)
 	{
 		if (recipe == null || base.canAcceptItem(item, connectionSidePosition, otherHolder) == false)
@@ -41,6 +44,11 @@ public class Crafter : ItemHolder
 		return true; 
 	}
 
+	protected override void resetTargetForItem(Item item)
+	{
+		item.setNewTarget(null, 0, 0); // IMPORTANT: override base functionallity, so that it no longer resets the target of the input items! 
+	}
+
 	public override void processItems()
 	{
 		for (int i = 0; i < items.Count; ++i)
@@ -60,7 +68,7 @@ public class Crafter : ItemHolder
 			Item item = outputItems[i];
 			if (item.hasTarget() == false && (item.canBeProcessed() || item.isProcessed()))
 			{
-				resetTargetForItem(item);
+				base.resetTargetForItem(item); // FOR THE NEW OUTPUT ITEMS USE THE BASE CLASS FUNCTION TO RESET THE TARGET 
 			}
 
 			if (item.canBeProcessed())
@@ -119,7 +127,12 @@ public class Crafter : ItemHolder
 
 	public override int getTargetOutputSideForItem(Item item)
 	{
-		int targetSide = recipe.getOutputSideForItem(item);
+		List<int> targetSides = recipe.getOutputSideForItem(item);
+		int targetSide = targetSides.ElementAt(0);
+		if(targetSides.Count > 1)
+		{
+			targetSide = targetSides.ElementAt((sameOutputLoadBalancer++) %2);
+		}
 		ConnectionSide[] connections = getConnectionSides();
 		for (int i = 0; i < connections.Length; ++i)
 		{

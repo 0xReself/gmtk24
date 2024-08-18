@@ -175,12 +175,12 @@ public class HolderBase : MonoBehaviour
 	// per default this just circles through the connection output sides if there is a connected holder on that side!!!). returns the holder with the connection side index!
 	//
 	// can also be overridden in subclass, but it would be better to override processItems instead
-	public virtual TargetInformation getNextOutputItemHolder(Item item)
+	public virtual TargetInformation getNextOutputItemHolder(Item item, int outputSide)
 	{
 		Placeable placeable = getPlaceable();
 		int size = placeable.GetSize();
 		Vector2Int position = placeable.startPosition; // start tile of this is top left field
-		int outputSide = getTargetOutputSideForItem(item); // output side starts top left to the left and end bottom left to the left (clockwise) 
+		
 		if (outputSide < 0 || outputSide > getConnectionSides().Length)
 		{
 			return null;
@@ -204,6 +204,7 @@ public class HolderBase : MonoBehaviour
 				}
 			}
 		}
+
 		return null;
 	}
 
@@ -211,9 +212,10 @@ public class HolderBase : MonoBehaviour
 	// used in update to recalculate and initially when accepting the item
 	//
 	// calls getNextOutputItemHolder and THIS MAY SET THE target of the item to null if there is no valid holder connected!
-	protected void resetTargetForItem(Item item)
+	protected virtual void resetTargetForItem(Item item)
 	{
-		TargetInformation info = getNextOutputItemHolder(item);
+		int outputSide = getTargetOutputSideForItem(item); // output side starts top left to the left and end bottom left to the left (clockwise) 
+		TargetInformation info = getNextOutputItemHolder(item, outputSide);
 		if (info != null)
 		{
 			item.setNewTarget(info.targetHolder, info.myOutputSide, info.otherInputSide);
@@ -221,7 +223,7 @@ public class HolderBase : MonoBehaviour
 		}
 		else
 		{
-			item.setNewTarget(null, getTargetOutputSideForItem(item), 0);
+			item.setNewTarget(null, outputSide, 0);
 		}
 	}
 

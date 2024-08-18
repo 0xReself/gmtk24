@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static Recipe;
 using static UnityEditor.Progress;
 
@@ -48,7 +49,7 @@ public class Recipe
 
 	// required for one crafting step 
 	public List<ItemBatch> inputItems = new List<ItemBatch> { };
-	// outputted from one crafting step 
+	// outputted from one crafting step. IMPORTANT: if only one output resource is used, but you want it on both output slots, add the same item class twice with different output slots, but once with no amount
 	public List<ItemBatch> outputItems = new List<ItemBatch> { };
 	// the amount of time it takes the crafter to create this recipe 
 	public float processingTime;
@@ -96,16 +97,27 @@ public class Recipe
 	}
 
 	// returns the connection side of the output batch related to the type of the item
-	// -1 if not found 
-	public int getOutputSideForItem(Item item)
+	// MOST OF THE TIMES THIS ONLY CONTAINS ONE ENTRY, but if there is only one output mat then two slots can be declared for it
+	// empty list if not found 
+	public List<int> getOutputSideForItem(Item item)
 	{
-		ItemBatch batch = getBatchForItemClass(item.GetType(), outputItems);
-		if (batch == null)
+		Type itemClass = item.GetType();
+		List<int> outputSides = new List<int>(); 
+
+		foreach (ItemBatch batch in outputItems)
+		{
+			if (batch.itemClass == itemClass)
+			{
+				outputSides.Add(batch.connectionSide);
+			}
+		}
+
+		if (outputSides.Count <= 0)
 		{
 			Debug.LogError("item batch did not contain the item");
-			return -1;
 		}
-		return batch.connectionSide;
+
+		return outputSides;
 	}
 
 	public ItemBatch getBatchForItemClass(Type itemClass, List<ItemBatch> batches)
