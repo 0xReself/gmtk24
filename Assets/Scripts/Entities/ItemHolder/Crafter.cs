@@ -188,6 +188,7 @@ public class Crafter : ItemHolder
 
 	public void setRecipe(Recipe recipe)
 	{
+		Debug.Log("add new recipe: " + recipe + " to " + this);
 		this.recipe = recipe;
 		remainingProcessTime = recipe.processingTime;
 		deleteAllItems();

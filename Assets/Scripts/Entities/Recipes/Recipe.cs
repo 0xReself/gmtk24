@@ -45,6 +45,11 @@ public class Recipe
 			return false;
 		}
 
+		public override string ToString()
+		{
+			return GetType().Name + "{item: " + itemClass + " count: " + itemCount + " side: " + connectionSide + "}";
+		}
+
 	}
 
 	// required for one crafting step 
@@ -130,6 +135,11 @@ public class Recipe
 			}
 		}
 		return null;
+	}
+
+	public override string ToString()
+	{
+		return GetType().Name + "{processingTime: " + processingTime + " inputItems: " + string.Join(",", inputItems) + " and outputItems: " + string.Join(",", outputItems) + "}";
 	}
 
 }
