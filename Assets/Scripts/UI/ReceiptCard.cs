@@ -7,18 +7,18 @@ using UnityEngine.UI;
 public class ReceiptCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
         
     [SerializeField]
-    private Recipe recipe;
+    protected Recipe recipe;
 
     [SerializeField]
-    private List<Sprite> sprites;
+    protected List<Sprite> sprites;
 
-    private bool selected = false;
-
-    [SerializeField]
-    private RecipeManager recipeManager;
+    protected bool selected = false;
 
     [SerializeField]
-    private PlacementController placementController;
+    protected RecipeManager recipeManager;
+
+    [SerializeField]
+    protected PlacementController placementController;
 
     public void ResetSelected() {
         this.GetComponent<Image>().sprite = sprites[0];

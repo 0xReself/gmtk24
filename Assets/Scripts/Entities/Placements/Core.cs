@@ -25,8 +25,6 @@ public class Core : Placeable {
 
     private bool hover = false;
 
-    [SerializeField]
-    private ResourceManager resourceManager;
     void Awake() {
         resourceManager = GameObject.FindGameObjectWithTag("ResourceManager").GetComponent<ResourceManager>();
     }

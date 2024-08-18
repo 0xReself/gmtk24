@@ -10,6 +10,7 @@ public class Machines : Placeable {
 
     void Awake() {
         uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<ShopManager>();
+        resourceManager = GameObject.FindGameObjectWithTag("ResourceManager").GetComponent<ResourceManager>();
         //placementManager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlacementController>();
     }
 
