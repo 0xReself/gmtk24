@@ -13,6 +13,10 @@ public class JumpPad : Placeable
 
     
     void Update() {
+        if (animate) {
+            HandleSpawnAnimation();
+        }
+
         if(isPreview) {
             topLayer.GetComponent<SpriteRenderer>().sprite = sprites[1];
         } else {
