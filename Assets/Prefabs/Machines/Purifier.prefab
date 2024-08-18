@@ -2278,7 +2278,7 @@ GameObject:
   - component: {fileID: 7152108977466594269}
   - component: {fileID: 15175353389163495}
   - component: {fileID: 2601646794258317596}
-  - component: {fileID: 403282667694502204}
+  - component: {fileID: 455014334982530116}
   m_Layer: 5
   m_Name: Azurite
   m_TagString: Untagged
@@ -2385,7 +2385,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &403282667694502204
+--- !u!114 &455014334982530116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2394,7 +2394,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2184751546193068269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 862fa5c73abd4e14097d00ce3d0c96cf, type: 3}
+  m_Script: {fileID: 11500000, guid: 82c101c2c5fd6564ca9f564f87ee36aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
