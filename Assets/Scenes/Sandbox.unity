@@ -3380,9 +3380,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridCursor: {fileID: 1419410700}
   gridCursorSpeed: 50
-  zoom: 0
+  zoom: 7
   zoomMultiplier: 1
-  maxZoom: 8
+  maxZoom: 30
   minZoom: 2
   velocity: 0
   smoothTime: 0.1
@@ -16327,7 +16327,7 @@ MonoBehaviour:
   azuriteEssence: 0
   amethystEssence: 0
   emberEssence: 0
-  crimsonEssence: 35
+  crimsonEssence: 0
   moonlightEssence: 0
 --- !u!1 &2124180696
 GameObject:

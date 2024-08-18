@@ -6,7 +6,7 @@ public class CrimsonEnrichment : ReceiptCard {
     void Start() {
         List <Recipe.ItemBatch> inputItems = new List<Recipe.ItemBatch> { 
             new Recipe.ItemBatch(typeof(CrimsonFragment), 10, 0), 
-            new Recipe.ItemBatch(typeof(AmethystFragment), 8, 0), 
+            new Recipe.ItemBatch(typeof(AmethystFragment), 2, 0), 
             new Recipe.ItemBatch(typeof(AzuriteShard), 2, 0), 
         };
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class AzuriteRefinement : ReceiptCard {
     void Start() {
         List <Recipe.ItemBatch> inputItems = new List<Recipe.ItemBatch> { 
-            new Recipe.ItemBatch(typeof(AzuriteFragment), 10, 0)};
+            new Recipe.ItemBatch(typeof(AzuriteFragment), 3, 0)};
 		List <Recipe.ItemBatch> outputItems = new List<Recipe.ItemBatch> { 
             new Recipe.ItemBatch(typeof(AzuriteShard), 1, 3), 
             new Recipe.ItemBatch(typeof(AzuriteShard), 0, 4) 

@@ -6,8 +6,8 @@ public class AmethystPurification : ReceiptCard {
     
     void Start() {
         List <Recipe.ItemBatch> inputItems = new List<Recipe.ItemBatch> { 
-            new Recipe.ItemBatch(typeof(AmethystFragment), 5, 0), 
-            new Recipe.ItemBatch(typeof(AmethystShard), 50, 0), 
+            new Recipe.ItemBatch(typeof(AmethystFragment), 2, 0), 
+            new Recipe.ItemBatch(typeof(AmethystShard), 5, 0), 
         };
 
 		List <Recipe.ItemBatch> outputItems = new List<Recipe.ItemBatch> { 

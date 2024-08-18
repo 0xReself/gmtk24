@@ -6,8 +6,8 @@ public class AzuritePurification : ReceiptCard {
     
     void Start() {
         List <Recipe.ItemBatch> inputItems = new List<Recipe.ItemBatch> { 
-            new Recipe.ItemBatch(typeof(AzuriteFragment), 5, 0), 
-            new Recipe.ItemBatch(typeof(AzuriteShard), 50, 0), 
+            new Recipe.ItemBatch(typeof(AzuriteFragment), 2, 0), 
+            new Recipe.ItemBatch(typeof(AzuriteShard), 5, 0), 
         };
 
 		List <Recipe.ItemBatch> outputItems = new List<Recipe.ItemBatch> { 

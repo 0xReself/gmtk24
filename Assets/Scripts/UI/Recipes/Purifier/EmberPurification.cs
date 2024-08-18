@@ -6,9 +6,9 @@ public class EmberPurification : ReceiptCard {
     void Start() {
         List <Recipe.ItemBatch> inputItems = new List<Recipe.ItemBatch> { 
             new Recipe.ItemBatch(typeof(EmberFragment), 5, 0), 
-            new Recipe.ItemBatch(typeof(EmberShard), 5, 0),
-            new Recipe.ItemBatch(typeof(CrimsonFragment), 5, 0),
-            new Recipe.ItemBatch(typeof(CrimsonEssence), 5, 0),
+            new Recipe.ItemBatch(typeof(EmberShard), 15, 0),
+            new Recipe.ItemBatch(typeof(CrimsonFragment), 3, 0),
+            new Recipe.ItemBatch(typeof(CrimsonEssence), 3, 0),
         };
 
 		List <Recipe.ItemBatch> outputItems = new List<Recipe.ItemBatch> { 

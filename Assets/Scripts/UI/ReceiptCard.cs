@@ -20,6 +20,9 @@ public class ReceiptCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     [SerializeField]
     protected PlacementController placementController;
 
+    [SerializeField]
+    protected Crafter crafter;
+
     public void ResetSelected() {
         this.GetComponent<Image>().sprite = sprites[0];
         this.GetComponent<Image>().color = new Color(0.09f, 0.09f, 0.09f, 0.0f);
@@ -34,6 +37,7 @@ public class ReceiptCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         recipeManager.gameObject.SetActive(false);
         placementController.disabled = false;
         placementController.ChangeSelectedPlaceable(null, PlacingMode.Idle);
+        crafter.setRecipe(recipe);
     }
 
     public void OnPointerEnter(PointerEventData eventData) {

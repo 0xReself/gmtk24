@@ -1515,7 +1515,7 @@ GameObject:
   - component: {fileID: 386544266315642510}
   - component: {fileID: 1152359906071583431}
   - component: {fileID: 5278530061228201471}
-  - component: {fileID: 5490562371844490368}
+  - component: {fileID: 5433047144315540467}
   m_Layer: 5
   m_Name: Ember
   m_TagString: Untagged
@@ -1622,7 +1622,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &5490562371844490368
+--- !u!114 &5433047144315540467
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1631,7 +1631,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1792590825731208582}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 862fa5c73abd4e14097d00ce3d0c96cf, type: 3}
+  m_Script: {fileID: 11500000, guid: dd5284910639a494bb6e84af5b91b4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
@@ -1639,6 +1639,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dbe3a31768ecca745bb080c2b172a8bd, type: 3}
   recipeManager: {fileID: 2011356457964728426}
   placementController: {fileID: 0}
+  crafter: {fileID: -5535301591585670799}
 --- !u!1 &1967310272071260156
 GameObject:
   m_ObjectHideFlags: 0
@@ -1854,9 +1855,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '10
-
-'
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -2144,9 +2143,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '10
-
-'
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -2493,9 +2490,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '100
-
-'
+  m_text: 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -2629,9 +2624,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '100
-
-'
+  m_text: 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -3361,10 +3354,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipes:
   - {fileID: 7224637125464244146}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3864370015535067216}
+  - {fileID: 3937029512425891588}
+  - {fileID: 1792590825731208582}
+  - {fileID: 7585185469118710836}
 --- !u!1 &3750333652998013797
 GameObject:
   m_ObjectHideFlags: 0
@@ -3591,7 +3584,7 @@ GameObject:
   - component: {fileID: 3205804235325348667}
   - component: {fileID: 8641669075369056001}
   - component: {fileID: 5299947281326842033}
-  - component: {fileID: 5456356129084303700}
+  - component: {fileID: 6345562006219682763}
   m_Layer: 5
   m_Name: Amethyst
   m_TagString: Untagged
@@ -3698,7 +3691,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &5456356129084303700
+--- !u!114 &6345562006219682763
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3707,7 +3700,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3864370015535067216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 862fa5c73abd4e14097d00ce3d0c96cf, type: 3}
+  m_Script: {fileID: 11500000, guid: 457594aa3bea8524bbeed80847ce2651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
@@ -3715,6 +3708,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dbe3a31768ecca745bb080c2b172a8bd, type: 3}
   recipeManager: {fileID: 2011356457964728426}
   placementController: {fileID: 0}
+  crafter: {fileID: -5535301591585670799}
 --- !u!1 &3869134595306051263
 GameObject:
   m_ObjectHideFlags: 0
@@ -3914,7 +3908,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 20
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -3996,7 +3990,7 @@ GameObject:
   - component: {fileID: 6585766173057580890}
   - component: {fileID: 5640449454464564916}
   - component: {fileID: 813146326247032282}
-  - component: {fileID: 9211798799624806691}
+  - component: {fileID: 4050251265977614374}
   m_Layer: 5
   m_Name: Crimson
   m_TagString: Untagged
@@ -4103,7 +4097,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &9211798799624806691
+--- !u!114 &4050251265977614374
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4112,7 +4106,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3937029512425891588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 862fa5c73abd4e14097d00ce3d0c96cf, type: 3}
+  m_Script: {fileID: 11500000, guid: a2400260f406dd041bc3ae639fe41b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
@@ -4120,6 +4114,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dbe3a31768ecca745bb080c2b172a8bd, type: 3}
   recipeManager: {fileID: 2011356457964728426}
   placementController: {fileID: 0}
+  crafter: {fileID: -5535301591585670799}
 --- !u!1 &4049903475913471400
 GameObject:
   m_ObjectHideFlags: 0
@@ -5209,9 +5204,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '5
-
-'
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -5345,9 +5338,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '1K
-
-'
+  m_text: 25
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -5832,7 +5823,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -6270,9 +6261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '10
-
-'
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -6841,7 +6830,7 @@ MonoBehaviour:
   topLayer: {fileID: 4388212786360558}
   pushUp: 2
   spawnTime: 0.2
-  receipeUI: {fileID: 0}
+  receipeUI: {fileID: 3731001910346087695}
 --- !u!1 &6830668113456785657
 GameObject:
   m_ObjectHideFlags: 0
@@ -6907,9 +6896,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '10
-
-'
+  m_text: 15
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -7220,7 +7207,7 @@ GameObject:
   - component: {fileID: 2632124886137273195}
   - component: {fileID: 7662492970972402377}
   - component: {fileID: 8168143009841170857}
-  - component: {fileID: 3387696319817791081}
+  - component: {fileID: 7038970728297040229}
   m_Layer: 5
   m_Name: Azurite
   m_TagString: Untagged
@@ -7327,7 +7314,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &3387696319817791081
+--- !u!114 &7038970728297040229
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7344,6 +7331,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dbe3a31768ecca745bb080c2b172a8bd, type: 3}
   recipeManager: {fileID: 2011356457964728426}
   placementController: {fileID: 0}
+  crafter: {fileID: -5535301591585670799}
 --- !u!1 &7228049503226189752
 GameObject:
   m_ObjectHideFlags: 0
@@ -7409,9 +7397,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '100
-
-'
+  m_text: 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -7627,7 +7613,7 @@ GameObject:
   - component: {fileID: 1415560153103536651}
   - component: {fileID: 3527510087567142901}
   - component: {fileID: 1456440443907761946}
-  - component: {fileID: 7969834814261863656}
+  - component: {fileID: 7728622887264645569}
   m_Layer: 5
   m_Name: Moonlight
   m_TagString: Untagged
@@ -7734,7 +7720,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &7969834814261863656
+--- !u!114 &7728622887264645569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7743,7 +7729,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7585185469118710836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 862fa5c73abd4e14097d00ce3d0c96cf, type: 3}
+  m_Script: {fileID: 11500000, guid: 5713b32d58788af4a8bbb97f1e6942a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
@@ -7751,6 +7737,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dbe3a31768ecca745bb080c2b172a8bd, type: 3}
   recipeManager: {fileID: 2011356457964728426}
   placementController: {fileID: 0}
+  crafter: {fileID: -5535301591585670799}
 --- !u!1 &7723784548169295619
 GameObject:
   m_ObjectHideFlags: 0
@@ -8362,9 +8349,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '100
-
-'
+  m_text: 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -8885,9 +8870,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '10
-
-'
+  m_text: 5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
@@ -9573,7 +9556,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 7
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
   m_sharedMaterial: {fileID: -5236111883978191490, guid: 49c215ef5e389284a8f60c8d6fbebdea, type: 2}
