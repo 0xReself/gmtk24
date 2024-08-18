@@ -10,15 +10,30 @@ public class ReceiptCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     private Recipe recipe;
 
     [SerializeField]
-    private GameObject recipeFull;
+    private List<Sprite> sprites;
 
     private bool selected = false;
 
+    [SerializeField]
+    private RecipeManager recipeManager;
+
+    [SerializeField]
+    private PlacementController placementController;
+
+    public void ResetSelected() {
+        this.GetComponent<Image>().sprite = sprites[0];
+        this.GetComponent<Image>().color = new Color(0.09f, 0.09f, 0.09f, 0.0f);
+        selected = false;
+    }
+
     public void OnPointerClick(PointerEventData eventData) {
-        recipeFull.SetActive(true);
-        this.GetComponent<Image>().color = new Color(0.09f, 0.09f, 0.09f, 1.0f);
+        recipeManager.ResetSelected();
+        this.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1.0f);
+        this.GetComponent<Image>().sprite = sprites[1];
         selected = true;
-        //this.GetComponent<Purifier>().setRecipe(recipe);
+        recipeManager.gameObject.SetActive(false);
+        placementController.disabled = false;
+        placementController.ChangeSelectedPlaceable(null, PlacingMode.Idle);
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
@@ -33,6 +48,10 @@ public class ReceiptCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
             return;
         }
         this.GetComponent<Image>().color = new Color(0.09f, 0.09f, 0.09f, 0.0f);
+    }
+
+    void Awake() {
+        this.placementController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlacementController>();
     }
 
     void Start() {

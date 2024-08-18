@@ -116,7 +116,7 @@ public class PlacementController : MonoBehaviour {
         if (placedObject != null) {
             Placeable placeable = placedObject.GetComponent<Placeable>();
 
-            if(placeable.startPosition == new Vector2Int(-1, 1)) {
+            if(placeable.startPosition == new Vector2Int(-1, 1) || placeable.startPosition == new Vector2Int(30, 2)) {
                 return;
             }
 
