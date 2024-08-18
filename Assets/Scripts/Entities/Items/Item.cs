@@ -6,10 +6,10 @@ public class Item : MonoBehaviour
 {
 	[SerializeField]
 	// The amount of time it takes for item holders to process this item. this is ignored for the crafter
-	private double processingTime = 0;
+	private float processingTime = 0;
 
 	// the remaining time it takes to process the item within the current item holder 
-	private double remainingProcessingTime = 0;
+	private float remainingProcessingTime = 0;
 
 	// in which holder the item is currently in
 	private ItemHolder currentHolder;
@@ -30,12 +30,7 @@ public class Item : MonoBehaviour
 	// this also calls acceptitem on the next holder which also calls setNewTarget
 	public void moveToTarget()
 	{
-		remainingProcessingTime = processingTime;
-		this.currentHolder = nextOutputHolder;
-		this.inputSide = connectedTargetInputSide;
-		this.nextOutputHolder = null;
-		this.outputSide = 0;
-		this.connectedTargetInputSide = 0;
+		setSource(nextOutputHolder, connectedTargetInputSide, 0, 0, processingTime);
 		if(currentHolder== null)
 		{
 			Debug.LogError("Item did not have a next holder");
@@ -55,12 +50,25 @@ public class Item : MonoBehaviour
 		this.connectedTargetInputSide = connectedTargetInputSide;
 	}
 
+	// as an alternative to calling setnewtarget and movetotarget twice, this explecitly sets a source for the item (used in crafter, because it has a different item queue)
+	// per default inputside should be 0 and outputside -1   and the connectedtargetinputside is 0
+	// the remainingProcessingTime can also be overridden here!
+	public void setSource(ItemHolder source, int inputSide, int outputside, int connectedTargetInputSide, float remainingProcessingTime)
+	{
+		this.remainingProcessingTime = remainingProcessingTime;
+		this.currentHolder = source;
+		this.nextOutputHolder = null;
+		this.inputSide = inputSide;
+		this.outputSide = outputside;
+		this.connectedTargetInputSide = connectedTargetInputSide;
+	}
+
 	// called by the holder to proccess the item
-	public virtual void process(double speed)
+	public virtual void process(float speed)
 	{
 		if(currentHolder != null)
 		{
-			if(remainingProcessingTime > 0)
+			if(remainingProcessingTime > 0.0f)
 			{
 				remainingProcessingTime -= speed;
 			}
@@ -80,13 +88,13 @@ public class Item : MonoBehaviour
 	// returns if the item can be processed by the holder. (sub class can add custom behaviour, but must return super.canBeProcessed) 
 	public virtual bool canBeProcessed()
 	{
-		return currentHolder != null && remainingProcessingTime > 0;
+		return currentHolder != null && remainingProcessingTime > 0.0000000001f;
 	}
 
 	// returns if the item was processed by the holder. (sub class can add custom behaviour, but must return super.isProcessed) 
 	public virtual bool isProcessed()
 	{
-		return currentHolder != null && remainingProcessingTime <= 0;
+		return currentHolder != null && remainingProcessingTime < 0.0000000001f;
 	}
 
 	// if the item has a new holder where it will move to 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static Recipe;
+using static UnityEditor.Progress;
 
 // recipes used inside of crafters as configuration templates 
 public class Recipe
@@ -50,9 +51,9 @@ public class Recipe
 	// outputted from one crafting step 
 	public List<ItemBatch> outputItems = new List<ItemBatch> { };
 	// the amount of time it takes the crafter to create this recipe 
-	public double processingTime;
+	public float processingTime;
 
-	public Recipe(List<ItemBatch> inputItems, List<ItemBatch> outputItems, int processingTime)
+	public Recipe(List<ItemBatch> inputItems, List<ItemBatch> outputItems, float processingTime)
 	{
 		this.inputItems = inputItems;
 		this.outputItems = outputItems;
@@ -82,16 +83,41 @@ public class Recipe
 	}
 
 	// returns if the items contain enough of the item class and may not contain any more (for the crafting recipe)
+	// false if not found 
 	public bool inputFullOf(List<Item> items, Type itemClass)
 	{
-		foreach(ItemBatch batch in inputItems)
+		ItemBatch batch = getBatchForItemClass(itemClass, inputItems);
+		if(batch == null)
+		{
+			Debug.LogError("item batch did not contain the item class");
+			return false;
+		}
+		return batch.isContainedIn(items);
+	}
+
+	// returns the connection side of the output batch related to the type of the item
+	// -1 if not found 
+	public int getOutputSideForItem(Item item)
+	{
+		ItemBatch batch = getBatchForItemClass(item.GetType(), outputItems);
+		if (batch == null)
+		{
+			Debug.LogError("item batch did not contain the item");
+			return -1;
+		}
+		return batch.connectionSide;
+	}
+
+	public ItemBatch getBatchForItemClass(Type itemClass, List<ItemBatch> batches)
+	{
+		foreach (ItemBatch batch in batches)
 		{
 			if (batch.itemClass == itemClass)
 			{
-				return batch.isContainedIn(items);
+				return batch;
 			}
 		}
-		return false;
+		return null;
 	}
 
 }

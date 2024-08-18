@@ -12,7 +12,7 @@ public class ItemHolder : HolderBase
 
 	[SerializeField]
 	// how fast the item holder processes the item (also depends on the items processing time) 
-	protected int processingSpeed = 0;
+	protected float processingSpeed = 0;
 
 	// the items currently inside of this itemholder. (for crafters this is the input item queue, otherwise its input and output)
 	protected List<Item> items = new List<Item> { };
@@ -58,7 +58,7 @@ public class ItemHolder : HolderBase
 			{
 				item.process(processingSpeed * Time.deltaTime);
 				// todo: temp for testing
-				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10 * Time.deltaTime);
+				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10.0f * Time.deltaTime);
 
 			}
 			if (item.isProcessed())
@@ -92,6 +92,11 @@ public class ItemHolder : HolderBase
 		return items.Count >= maxItems; 
 	}
 
+	// if this item holder contains at least one item to output. only overridden in crafter
+	public virtual bool containsOneOutputItem()
+	{
+		return items.Count > 0;
+	}
 
 	// this is called when the placeable accosiated with this item holder is destroyed/deleted 
 	//
@@ -120,7 +125,7 @@ public class ItemHolder : HolderBase
 	// map manager is still null here
 	protected virtual void onStart()
 	{
-
+		
 	}
 
 	protected virtual void onUpdate()
@@ -171,10 +176,16 @@ public class ItemHolder : HolderBase
 			return false;
 		}
 
+		Debug.Log("New Item spawned in " + this + " the item : " + item.ToString());
+		addSpawnedItem(item);
+		return true;
+	}
+
+	// this can change the behaviour how the newly spawned item is added to this if overridden in a subclass
+	protected virtual void addSpawnedItem(Item item)
+	{
 		item.setNewTarget(this, -1, 0);
 		item.moveToTarget();
-		Debug.Log("New Item spawned: " + item.ToString());
-		return true;
 	}
 
 	// same as spawnItem, but uses ItemManager to look up the prefab for the item class

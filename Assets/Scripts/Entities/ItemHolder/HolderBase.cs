@@ -79,9 +79,8 @@ public class HolderBase : MonoBehaviour
 		return cachedConnections;
 	}
 
-	// per default cycles through the output sides of the current item holder. this returns -1 if there are no output sides at all
-	// can be adjusted 
-	public virtual int getNextOutputSide()
+
+	public int getNextOutputSide()
 	{
 		ConnectionSide[] connections = getConnectionSides();
 		currentOutputSide++;
@@ -93,7 +92,20 @@ public class HolderBase : MonoBehaviour
 				return currentOutputSide;
 			}
 		}
+
 		return -1;
+	}
+
+	// per default cycles through the output sides of the current item holder. this returns -1 if there are no output sides at all
+	// can be adjusted to for example return specific outputs for specific items, etc 
+	public virtual int getTargetOutputSideForItem(Item item)
+	{
+		int output = getNextOutputSide();
+		if( output == -1 )
+		{
+			Debug.LogError("holder " + this + " did not have outputs defined for the item " + item);
+		}
+		return output;
 	}
 
 	private Vector2Int calculateMyTargetPos(int direction, int steps, int size, Vector2Int position)
@@ -168,7 +180,7 @@ public class HolderBase : MonoBehaviour
 		Placeable placeable = getPlaceable();
 		int size = placeable.GetSize();
 		Vector2Int position = placeable.startPosition; // start tile of this is top left field
-		int outputSide = getNextOutputSide(); // output side starts top left to the left and end bottom left to the left (clockwise) 
+		int outputSide = getTargetOutputSideForItem(item); // output side starts top left to the left and end bottom left to the left (clockwise) 
 		if (outputSide < 0 || outputSide > getConnectionSides().Length)
 		{
 			return null;
@@ -195,6 +207,7 @@ public class HolderBase : MonoBehaviour
 		return null;
 	}
 
+
 	// used in update to recalculate and initially when accepting the item
 	//
 	// calls getNextOutputItemHolder and THIS MAY SET THE target of the item to null if there is no valid holder connected!
@@ -208,7 +221,7 @@ public class HolderBase : MonoBehaviour
 		}
 		else
 		{
-			item.setNewTarget(null, getNextOutputSide(), 0);
+			item.setNewTarget(null, getTargetOutputSideForItem(item), 0);
 		}
 	}
 
