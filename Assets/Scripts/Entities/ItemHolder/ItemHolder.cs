@@ -1,12 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UIElements;
 using UnityEngine.WSA;
 using static UnityEditor.Progress;
 using static UnityEngine.EventSystems.StandaloneInputModule;
+using static UnityEngine.GraphicsBuffer;
 
 public class ItemHolder : MonoBehaviour
 {
@@ -150,6 +154,67 @@ public class ItemHolder : MonoBehaviour
 		return -1;
 	}
 
+	private Vector2Int calculateMyTargetPos(int direction, int steps, int size, Vector2Int position)
+	{
+		int xOffset = 0;
+		int yOffset = 0;
+
+		switch (direction)
+		{
+			case 0: //left
+				xOffset = -1;
+				yOffset = steps + 1 - size;
+				break;
+			case 1: // top 
+				yOffset = 1;
+				xOffset = steps;
+				break;
+			case 2: // right 
+				xOffset = size;
+				yOffset = -steps;
+				break;
+			case 3: // bot
+				yOffset = -size;
+				xOffset = size - steps - 1;
+				break;
+		}
+		return new Vector2Int(position.x + xOffset, position.y + yOffset); // where the other item holder should be! (NOT TOP LEFT CORNER)
+	}
+
+	private int calculateOtherInputPos(int direction, int steps, int size, Vector2Int position, Placeable otherPlaceable)
+	{
+		int xOffset = 0;
+		int yOffset = 0;
+		int otherSize = otherPlaceable.GetSize();
+		Vector2Int positionDifference = otherPlaceable.startPosition - position; // COMPARED WITH TOP LEFT CORNER OF OTHER ITEM HOLDER. distance is added to the steps of previous holder to get the new one
+		int otherSteps = size - steps - 1; // first invert steps, because side is mirrored
+		int otherDirection = 0;
+		switch (direction)
+		{
+
+			case 2: // right to left 
+				otherSteps -= positionDifference.y; // negative difference is added as positive
+				otherSteps += otherSize - size; // add size difference shift positive if other is bigger
+				otherDirection = 4; // special case, in reality this is side 0
+				break;
+			case 1: // top to bot 
+				otherSteps -= positionDifference.x; // same as above, just with x
+				otherSteps += otherSize - size;
+				otherDirection = 3;
+				break;
+			case 0: //left to right 
+				otherSteps += positionDifference.y; // here only the positive position difference needs to be added
+				otherDirection = 2;
+				break;
+			case 3: // bot to top 
+				otherSteps += positionDifference.x; // same as above, just with x
+				otherDirection = 1;
+				break;
+		}
+		int otherInputSidePos = (otherDirection * otherSize - otherSize - 1 + otherSteps) % (otherSize * 4);
+		return otherInputSidePos;
+	}
+
 	// this is used to get the next item holder for the processed items and checks if it can accept an item. this can return null if none is found
 	// 
 	// per default this just circles through the connection output sides if there is a connected holder on that side!!!). returns the holder with the connection side index!
@@ -165,63 +230,21 @@ public class ItemHolder : MonoBehaviour
 		{
 			return null; 
 		}
-		int direction = (outputSide + (size-1) % (size * 4)) / size; // 0=left, 1=top, 2=right, 3=bot
-		int steps = (outputSide + size - 1) % size; // clockwise: top: 0,1,2  right : 0,1,2   bot: 0,2,1   left 0,1,2 
-		int xOffset = 0;
-		int yOffset = 0;
+		int direction = ((outputSide + size - 1) % (size * 4)) / size; // 0=left, 1=top, 2=right, 3=bot
+		int steps = (outputSide + size - 1) % size; // clockwise: top: 0,1,2  right : 0,1,2   bot: 0,2,1 (right to left)   left 0,1,2 (dowwn to up) 
+		Vector2Int targetPos = calculateMyTargetPos(direction, steps, size, position);
 
-		switch (direction)
-		{
-			case 0: //left
-				xOffset = -1;
-				yOffset = steps +1 - size;
-				break;
-			case 1: // top 
-				yOffset = 1;
-				xOffset = steps;
-				break;
-			case 2: // right 
-				xOffset = size;
-				yOffset = -steps;
-				break;
-			case 3: // bot
-				yOffset = -size;
-				xOffset = size - steps - 1;
-				break;
-		}
+		ItemHolder otherHolder = getItemHolderAt(targetPos);
 
-		Vector2Int targetPos = new Vector2Int(position.x + xOffset, position.y + yOffset); // where the other item holder should be!
-		setMapManager();
-		GameObject target = mapManager.Get(targetPos);
-		if(target != null)
+		if (otherHolder != null)
 		{
-			ItemHolder otherHolder = target.GetComponent<ItemHolder>();
-			if (otherHolder != null)
+			Placeable otherPlaceable = otherHolder.GetComponent<Placeable>();
+			if (otherPlaceable != null && otherPlaceable.isAlive())
 			{
-				int otherSize = target.GetComponent<Placeable>().GetSize();
-				int otherInputSide = 0;
-				switch (direction)
+				int otherInputPos = calculateOtherInputPos(direction, steps, size, position, otherPlaceable);
+				if (items.Count > 0 && otherHolder.canAcceptItem(items.ElementAt(0), otherInputPos))
 				{
-					case 0: //left to right 
-						xOffset = -1;
-						yOffset = steps + 1 - size;
-						break;
-					case 1: // top to bot 
-						yOffset = 1;
-						xOffset = steps;
-						break;
-					case 2: // right to left 
-						xOffset = size;
-						yOffset = -steps;
-						break;
-					case 3: // bot to top 
-						yOffset = -size;
-						xOffset = size - steps - 1;
-						break;
-				}
-				if(items.Count > 0 && otherHolder.canAcceptItem(items.ElementAt(0), otherInputSide))
-				{
-					return new TargetInformation(otherHolder, outputSide, otherInputSide);
+					return new TargetInformation(otherHolder, outputSide, otherInputPos);
 				}
 			}
 		}
@@ -244,7 +267,7 @@ public class ItemHolder : MonoBehaviour
 		for (int i = 0; i < items.Count; ++i)
 		{
 			Item item = items[i];
-			if(item.hasTarget() == false)
+			if(item.hasTarget() == false && (item.canBeProcessed() || item.isProcessed()))
 			{
 				resetTargetForItem(item);
 			}
@@ -288,13 +311,11 @@ public class ItemHolder : MonoBehaviour
 
 	void Start()
 	{
-		setMapManager();
 		onStart();
 	}
 
 	void Update()
 	{
-		setMapManager();
 		if (canProcessItems())
 		{
 			processItems();
@@ -302,12 +323,18 @@ public class ItemHolder : MonoBehaviour
 		onUpdate();
 	}
 
-	private void setMapManager()
+	private ItemHolder getItemHolderAt(Vector2Int targetPos)
 	{
 		if (mapManager == null)
 		{
 			mapManager = GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>(); // buggy, why unity? 
 		}
+		GameObject target = mapManager.Get(targetPos);
+		if (target != null)
+		{
+			return target.GetComponent<ItemHolder>();
+		}
+		return null;
 	}
 
 	// map manager is still null here
