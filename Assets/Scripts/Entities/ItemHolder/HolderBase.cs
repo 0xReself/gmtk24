@@ -101,9 +101,9 @@ public class HolderBase : MonoBehaviour
 	public virtual int getTargetOutputSideForItem(Item item)
 	{
 		int output = getNextOutputSide();
-		if( output == -1 )
+		if (output == -1)
 		{
-			if(hasNoOutput() == false)
+			if (hasNoOutput() == false)
 			{
 				Debug.LogError("holder " + this + " did not have outputs defined for the item " + item);
 			}
@@ -111,27 +111,34 @@ public class HolderBase : MonoBehaviour
 		return output;
 	}
 
+	// absolute number, default 1. overridden for jump pad holder, because there its 2
+	protected virtual int estimatedDistanceToTarget()
+	{
+		return 1;
+	}
+
 	private Vector2Int calculateMyTargetPos(int direction, int steps, int size, Vector2Int position)
 	{
 		int xOffset = 0;
 		int yOffset = 0;
+		int distance = estimatedDistanceToTarget();
 
 		switch (direction)
 		{
 			case 0: //left
-				xOffset = -1;
+				xOffset = -distance;
 				yOffset = steps + 1 - size;
 				break;
 			case 1: // top 
-				yOffset = 1;
+				yOffset = distance;
 				xOffset = steps;
 				break;
 			case 2: // right 
-				xOffset = size;
+				xOffset = size + (distance - 1);
 				yOffset = -steps;
 				break;
 			case 3: // bot
-				yOffset = -size;
+				yOffset = -size - (distance - 1);
 				xOffset = size - steps - 1;
 				break;
 		}
@@ -180,14 +187,14 @@ public class HolderBase : MonoBehaviour
 	// can also be overridden in subclass, but it would be better to override processItems instead
 	public virtual TargetInformation getNextOutputItemHolder(Item item, int outputSide)
 	{
-		if(hasNoOutput())
+		if (hasNoOutput())
 		{
 			return null; // for example sink
 		}
 		Placeable placeable = getPlaceable();
 		int size = placeable.GetSize();
 		Vector2Int position = placeable.startPosition; // start tile of this is top left field
-		
+
 		if (outputSide < 0 || outputSide > getConnectionSides().Length)
 		{
 			Debug.LogError("invalid output size for position: " + position + " at side: " + outputSide + " and holder " + this);
@@ -198,8 +205,8 @@ public class HolderBase : MonoBehaviour
 
 		Vector2Int targetPos = calculateMyTargetPos(direction, steps, size, position);
 		ItemHolder otherHolder = getItemHolderAt(targetPos);
-		
-		/// Debug.Log("found target: " + targetPos + " and holder " + otherHolder);
+
+		 /// Debug.Log("found target: " + targetPos + " and holder " + otherHolder  + " while this pos is " + position);
 
 		if (otherHolder != null)
 		{
