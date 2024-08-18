@@ -95,6 +95,7 @@ public class Item : MonoBehaviour
 		return nextOutputHolder != null;
 	}
 
+	// deletes the item and also removes it from the attached holders if they contain it and also deletes the holder references
 	public void delete()
 	{
 		if(currentHolder != null)
