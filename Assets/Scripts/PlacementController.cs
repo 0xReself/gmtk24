@@ -140,21 +140,24 @@ public class PlacementController : MonoBehaviour {
     }
 
     private void HandleHoverAndClick() {
+        if(disabled == true) {
+            return;
+        }
+
         //OnHover
         GameObject objectHovered = mapManager.Get(ToVector2Int(cameraController.GetGridPosition()));
-        if (objectHovered != lastGameObject) {
+        if (objectHovered != lastGameObject ) {
             if(lastGameObject != null) {
                 Placeable lastPlaceable = lastGameObject.GetComponent<Placeable>();
                 lastPlaceable.OnHoverEnd();
             }
-            
             if (objectHovered != null) {
                 Placeable newPlaceable = objectHovered.GetComponent<Placeable>();
                 newPlaceable.OnHoverStart();
             }
-
             lastGameObject = objectHovered;
         }
+        
 
         //OnClick
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
@@ -176,16 +179,31 @@ public class PlacementController : MonoBehaviour {
             }
         }
     }
+    public void CloseHover() {
+        if(lastGameObject != null) {
+            Placeable lastPlaceable = lastGameObject.GetComponent<Placeable>();
+            lastPlaceable.OnHoverEnd();
+            lastGameObject = null;
+        }
+    }
+
+    public void CloseClick() {
+        if(lastGameObjectClicked != null) {
+            Placeable placeable = lastGameObjectClicked.GetComponent<Placeable>();
+            placeable.OnClickUp();
+            lastGameObjectClicked = null;
+        }
+    }
+
+    public void OnCameraMove() {
+        shopManager.CloseOpenUI();
+    }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             ChangeSelectedPlaceable(null, PlacingMode.Idle);
             shopManager.CloseOpenUI();
         }
-
-        /*if (Input.GetKeyDown(KeyCode.Mouse0) && placingMode == PlacingMode.Idle) {
-            shopManager.CloseOpenUI();
-        }*/
 
         if (selectedPlaceablePrefab != null && placingMode == PlacingMode.Building) {
             HandlePlaceable();
@@ -196,6 +214,7 @@ public class PlacementController : MonoBehaviour {
             HandleDelete();
         }
 
+        
         if (placingMode == PlacingMode.Idle) {
             HandleHoverAndClick();
         }

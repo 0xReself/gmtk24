@@ -7,8 +7,14 @@ public class BlockPlacement : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [SerializeField]
     private PlacementController placementController;
     
+    void Awake() {
+        placementController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlacementController>();
+    }
+
     public void OnPointerEnter(PointerEventData eventData) {
         placementController.disabled = true;
+        placementController.CloseHover();
+        placementController.CloseClick();
     }
 
     public void OnPointerExit(PointerEventData eventData)
