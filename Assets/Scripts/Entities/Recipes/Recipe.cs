@@ -88,14 +88,14 @@ public class Recipe
 	}
 
 	// returns if the items contain enough of the item class and may not contain any more (for the crafting recipe)
-	// false if not found 
+	// also returns true if not found (so for example if wrong items are supplied to a crafter) 
 	public bool inputFullOf(List<Item> items, Type itemClass)
 	{
 		ItemBatch batch = getBatchForItemClass(itemClass, inputItems);
 		if(batch == null)
 		{
-			Debug.LogError("item batch " + batch + " did not contain the item class " + itemClass);
-			return false;
+			Debug.Log("item batch " + batch + " did not contain the item class " + itemClass);
+			return true;
 		}
 		return batch.isContainedIn(items);
 	}

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Playables;
 
 // base class for itemholder that handles all the target finding and some other base functions
 public class HolderBase : MonoBehaviour
@@ -76,6 +77,19 @@ public class HolderBase : MonoBehaviour
 			}
 		}
 		return cachedConnections;
+	}
+
+	// shifts a connection side according to the rotation of this 
+	public int shiftConnectionSide(int notRotatedConnectionSide, int totalConnectionCount)
+	{
+		Placeable placeable = getPlaceable();
+		if (placeable == null)
+		{
+			Debug.LogError("Item Holder had no placeable attached!");
+			return notRotatedConnectionSide;
+		}
+		int shift = placeable.GetSize() * placeable.GetRotation();
+		return (notRotatedConnectionSide + shift) % totalConnectionCount;
 	}
 
 

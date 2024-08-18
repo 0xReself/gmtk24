@@ -138,12 +138,12 @@ public class Crafter : ItemHolder
 		ConnectionSide[] connections = getConnectionSides();
 		for (int i = 0; i < connections.Length; ++i)
 		{
-			if (connections[i] == ConnectionSide.output && i == targetSide)
+			if (connections[i] == ConnectionSide.output && i == shiftConnectionSide(targetSide, connections.Length))
 			{
 				return i;
 			}
 		}
-		Debug.LogError("crafter " + this + " did not find a target for the item " + item);
+		Debug.LogError("crafter " + this + " did not find a target for the item " + item + " sides: " + targetSides + " and connections: " + connections);
 		return -1;
 	}
 
