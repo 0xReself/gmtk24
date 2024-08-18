@@ -80,6 +80,12 @@ public class Item : MonoBehaviour
 		}
 	}
 
+	// checked before moving and before setting the target in getNextOutputItemHolder 
+	public virtual bool canMoveToTarget()
+	{
+		return nextOutputHolder != null && nextOutputHolder.canAcceptItem(this, this.connectedTargetInputSide);
+	}
+
 	// returns if the item can be processed by the holder. (sub class can add custom behaviour, but must return super.canBeProcessed) 
 	public virtual bool canBeProcessed()
 	{

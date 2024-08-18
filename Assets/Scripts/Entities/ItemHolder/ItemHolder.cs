@@ -282,7 +282,7 @@ public class ItemHolder : MonoBehaviour
 			}
 			if (item.isProcessed())
 			{
-                if (item.hasTarget())
+                if (item.hasTarget() && item.canMoveToTarget())
                 {
 					items.Remove(item);
 					--i;
