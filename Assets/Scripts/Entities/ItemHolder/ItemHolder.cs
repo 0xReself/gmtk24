@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class ItemHolder : HolderBase
 {
-	// set to true on start and to false again on delete
-	private bool alive = false;
-
 	[SerializeField]
 	// Maximum amount of items this entity can contain at the same time. for crafters this is a multiplier to the recipe output count and does not affect the input items!!!!
 	protected int maxItems = 0;
