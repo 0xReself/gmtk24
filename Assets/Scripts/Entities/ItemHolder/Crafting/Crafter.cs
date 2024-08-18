@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEditor.Progress;
 
 // crafter uses the normal list of items as inputs for the crafts
 public class Crafter : ItemHolder

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 // base class for itemholder that handles all the target finding and some other base functions
 public class HolderBase : MonoBehaviour

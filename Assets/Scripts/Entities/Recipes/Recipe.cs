@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
-using static Recipe;
-using static UnityEditor.Progress;
+
 
 // recipes used inside of crafters as configuration templates 
 public class Recipe
