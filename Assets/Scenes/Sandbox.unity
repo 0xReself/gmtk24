@@ -2894,6 +2894,7 @@ MonoBehaviour:
   velocity: 0
   smoothTime: 0.1
   backgroundGrid: {fileID: 740150208}
+  placementController: {fileID: 519420034}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4723,7 +4724,7 @@ GameObject:
   - component: {fileID: 919850536}
   m_Layer: 5
   m_Name: UI
-  m_TagString: Untagged
+  m_TagString: UIManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7364,7 +7365,7 @@ GameObject:
   - component: {fileID: 1517355800}
   m_Layer: 5
   m_Name: Extractor
-  m_TagString: Untagged
+  m_TagString: UIToClose
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9052,7 +9053,7 @@ GameObject:
   - component: {fileID: 1655810023}
   m_Layer: 5
   m_Name: Machines
-  m_TagString: Untagged
+  m_TagString: UIToClose
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9322,7 +9323,7 @@ GameObject:
   - component: {fileID: 1684633187}
   m_Layer: 5
   m_Name: Transport
-  m_TagString: Untagged
+  m_TagString: UIToClose
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

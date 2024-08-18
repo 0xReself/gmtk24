@@ -28,6 +28,9 @@ public class CameraController : MonoBehaviour {
     [SerializeField]
     private GameObject backgroundGrid = null;
 
+    [SerializeField]
+    private PlacementController placementController;
+
     void Start() {
         if (this.GetComponent<Camera>() == null) {
             Debug.LogError("CameraController not on Gameobject with Camera");
@@ -46,7 +49,7 @@ public class CameraController : MonoBehaviour {
         backgroundGrid.GetComponent<SpriteRenderer>().material.SetFloat("_Opacity", opacity);
     }
 
-    private Vector3  GetMousePositionInWorldSpace() {
+    private Vector3 GetMousePositionInWorldSpace() {
         Vector3 worldPosition = this.GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
 
         return new Vector3(worldPosition.x, worldPosition.y);
@@ -66,6 +69,7 @@ public class CameraController : MonoBehaviour {
         this.GetComponent<Camera>().orthographicSize =  Mathf.SmoothDamp(this.GetComponent<Camera>().orthographicSize, zoom, ref velocity, smoothTime);
 
         if (Input.GetKey(KeyCode.Mouse1)) {
+            placementController.OnCameraMove();
             Vector3 difference = GetMousePositionInWorldSpace() - lastPos;
             lastPos = GetMousePositionInWorldSpace();
 

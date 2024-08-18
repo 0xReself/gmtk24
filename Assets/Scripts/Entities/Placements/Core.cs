@@ -48,13 +48,11 @@ public class Core : Placeable {
         hover = true;
         baseLayer.GetComponent<SpriteRenderer>().sprite = sprites[2];
         hoverSound.Play();
-        Debug.Log("Hover Start");
     }
 
     public override void OnHoverEnd() {
         hover = false;
         baseLayer.GetComponent<SpriteRenderer>().sprite = sprites[0];
-        Debug.Log("Hover End");
     }
 
     void Start() {

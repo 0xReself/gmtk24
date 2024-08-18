@@ -12,6 +12,10 @@ public class ShopManager : MonoBehaviour {
     private List<GameObject> buttons;
 
     public void CloseOpenUI() {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("UIToClose")) {
+            obj.SetActive(false);
+        }
+
         foreach (GameObject store in stores) {
             store.SetActive(false);
         }
