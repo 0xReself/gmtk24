@@ -18,13 +18,14 @@ public class Crafter : ItemHolder
 		{
 			return false;
 		}
+		// TODO: DOCH BASE AUFRUFEN 
 		ConnectionSide side = getConnectionSides()[connectionSidePosition];
 		return items.Count < maxItems && side <= ConnectionSide.input; // not using base method here, because items count is used differntly 
 	}
 
 	public override bool canProcessItems()
 	{
-		if (recipe == null)
+		if (recipe == null || base.canProcessItems() == false)
 		{
 			return false;
 		}

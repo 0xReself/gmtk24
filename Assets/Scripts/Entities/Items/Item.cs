@@ -97,6 +97,16 @@ public class Item : MonoBehaviour
 
 	public void delete()
 	{
+		if(currentHolder != null)
+		{
+			currentHolder.removeItem(this);
+		}
+		if (nextOutputHolder != null)
+		{
+			nextOutputHolder.removeItem(this);
+		}
+		currentHolder = null; 
+		nextOutputHolder = null;
 		Destroy(this.gameObject);
 	}
 
