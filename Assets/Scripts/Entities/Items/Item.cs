@@ -151,7 +151,7 @@ public class Item : MonoBehaviour
 			target = nextOutputHolder.ToString();
 		}
 
-		return "Item{current holder: " + current + ", next holder: " + target + ", remainingProcessingTime: " + 
+		return GetType().Name + "{current holder: " + current + ", next holder: " + target + ", remainingProcessingTime: " + 
 			remainingProcessingTime + ", inputSide: " + inputSide + ", outputSide: " + outputSide + ", connectedTargetInputSide: " + connectedTargetInputSide +  "}";
 	}
 }

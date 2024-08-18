@@ -100,8 +100,9 @@ public class ItemHolder : MonoBehaviour
 	// also calls resetTargetForItem to set a new target for the item if possible (otherwise it will be calculated later in update)
 	public virtual void acceptItem(Item item, int connectionSidePosition)
 	{
-		resetTargetForItem(item);
 		items.Add(item);
+		resetTargetForItem(item);
+		Debug.Log("holder " + this + " accepted new item " + item);
 	}
 
 	// spawns the given item as if this item holder produced it if it has space for it and returns true
@@ -174,6 +175,7 @@ public class ItemHolder : MonoBehaviour
 				xOffset = size - steps - 1;
 				break;
 		}
+
 		return new Vector2Int(position.x + xOffset, position.y + yOffset); // where the other item holder should be! (NOT TOP LEFT CORNER)
 	}
 
@@ -207,7 +209,7 @@ public class ItemHolder : MonoBehaviour
 		}
 		int paddedSize = otherSize - 1;
 		int otherInputSidePos = (otherDirection * otherSize - paddedSize + otherSteps) % (otherSize * 4);
-		Debug.Log("other size: " + otherSize + " distance: " + positionDifference + " othersteps: " + otherSteps + " otherdirection: " + otherDirection + " final input pos: " + otherInputSidePos);
+		///Debug.Log("other size: " + otherSize + " distance: " + positionDifference + " othersteps: " + otherSteps + " otherdirection: " + otherDirection + " final input pos: " + otherInputSidePos);
 		return otherInputSidePos;
 	}
 
@@ -231,7 +233,7 @@ public class ItemHolder : MonoBehaviour
 		
 		Vector2Int targetPos = calculateMyTargetPos(direction, steps, size, position);
 		ItemHolder otherHolder = getItemHolderAt(targetPos);
-		Debug.Log("found target: " + targetPos + " and holder " + otherHolder);
+		/// Debug.Log("found target: " + targetPos + " and holder " + otherHolder);
 
 		if (otherHolder != null)
 		{
@@ -283,7 +285,7 @@ public class ItemHolder : MonoBehaviour
 					items.Remove(item);
 					--i;
 					item.moveToTarget();
-					Debug.Log("Item Moved from Holder " + this.ToString() + ": " + item.ToString());
+					Debug.Log("Item Moved from Holder " + this + ": " + item.ToString());
 				}
             }
 		}
@@ -298,7 +300,7 @@ public class ItemHolder : MonoBehaviour
 		if (info != null)
 		{
 			item.setNewTarget(info.targetHolder, info.myOutputSide, info.otherInputSide);
-			Debug.Log("set new target for item: " + this);
+			///Debug.Log("set new target for item: " + this);
 		}
 		else
 		{
@@ -374,7 +376,7 @@ public class ItemHolder : MonoBehaviour
 		{
 			Debug.LogError("trying to log a item holder that did not have a placeable attached");
 		}
-		return "ItemHolder{itemCount: " + items.Count + ", current output: " + currentOutputSide + " of " +
+		return GetType().Name + "{itemCount: " + items.Count + ", current output: " + currentOutputSide + " of " +
 			string.Join(",", getConnectionSides()) + ", processingSpeed: " + processingSpeed + ", maxItems: " + maxItems +  ", position: " + placeable.startPosition + "}";
 	}
 }
