@@ -882,6 +882,9 @@ MonoBehaviour:
   crimsonEssencePrefab: {fileID: 0}
   emberEssencePrefab: {fileID: 0}
   moonlightEssencePrefab: {fileID: 0}
+  fragmentResourceAmount: 1
+  shardResourceAmount: 10
+  essenceResourceAmount: 100
 --- !u!4 &51089605
 Transform:
   m_ObjectHideFlags: 0
