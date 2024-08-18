@@ -169,7 +169,7 @@ public class Placeable : MonoBehaviour {
     }
 
     // if this is finished animating and is not a preview
-    public bool isAlive()
+    public virtual bool isAlive()
     {
         return animate == false && isPreview == false;
     }
