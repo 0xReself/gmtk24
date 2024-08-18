@@ -45,7 +45,15 @@ public class Item : MonoBehaviour
 		this.nextOutputHolder = null;
 		this.outputSide = 0;
 		this.connectedTargetInputSide = 0;
-		currentHolder.acceptItem(this, connectedTargetInputSide);
+		if(currentHolder== null)
+		{
+			Debug.LogError("Item did not have a next holder");
+			delete();
+		}
+		else
+		{
+			currentHolder.acceptItem(this, connectedTargetInputSide);
+		}
 	}
 
 	// sets a new target item holder where the item will move to next (this will be called from the acceptItem from the item holder through moveToTarget)
@@ -70,6 +78,12 @@ public class Item : MonoBehaviour
 		{
 			Debug.LogError("Item process had no holder!");
 		}
+	}
+
+	// checked before moving and before setting the target in getNextOutputItemHolder 
+	public virtual bool canMoveToTarget()
+	{
+		return nextOutputHolder != null && nextOutputHolder.canAcceptItem(this, this.connectedTargetInputSide, currentHolder);
 	}
 
 	// returns if the item can be processed by the holder. (sub class can add custom behaviour, but must return super.canBeProcessed) 

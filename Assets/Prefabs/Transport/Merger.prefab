@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 1761733761880910958}
   - component: {fileID: 1000586696892187106}
   - component: {fileID: -5811582169228091337}
+  - component: {fileID: -7468828743816474263}
   m_Layer: 0
   m_Name: Merger
   m_TagString: Untagged
@@ -318,3 +319,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-7468828743816474263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732090125897960743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a294ebd598c084f9ff00268a33c809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultConnections: 01000000010000000200000001000000
+  maxItems: 1
+  processingSpeed: 100
