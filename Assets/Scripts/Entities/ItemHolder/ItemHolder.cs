@@ -93,7 +93,7 @@ public class ItemHolder : MonoBehaviour
 	//
 	// for example conveyor belts may want to override this, because they have multiple inputs, but only one output, but cant connect to multiple other belts (for example edges must connect!)
 	// or crafting machines may only accept specific items
-	public virtual bool canAcceptItem(Item item, int connectionSidePosition)
+	public virtual bool canAcceptItem(Item item, int connectionSidePosition, ItemHolder otherHolder)
 	{
 		return items.Count < maxItems && getConnectionSides()[connectionSidePosition] == ConnectionSide.input;
 	}
@@ -243,7 +243,7 @@ public class ItemHolder : MonoBehaviour
 			if (otherPlaceable != null && otherPlaceable.isAlive())
 			{
 				int otherInputPos = calculateOtherInputPos(direction, steps, size, position, otherPlaceable);
-				if (items.Count > 0 && otherHolder.canAcceptItem(items.ElementAt(0), otherInputPos))
+				if (items.Count > 0 && otherHolder.canAcceptItem(items.ElementAt(0), otherInputPos, this))
 				{
 					return new TargetInformation(otherHolder, outputSide, otherInputPos);
 				}
