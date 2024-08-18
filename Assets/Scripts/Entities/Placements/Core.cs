@@ -15,10 +15,15 @@ public class Core : Placeable {
     [SerializeField]
     protected AudioSource keyDown;
 
+    [SerializeField]
+    protected AudioSource hoverSound;
+
     bool firstClick = true;
 
     [SerializeField]
     protected GameObject infoText;
+
+    private bool hover = false;
 
     public override void OnClickDown() {
         if(firstClick == true) {
@@ -31,8 +36,25 @@ public class Core : Placeable {
     }
 
     public override void OnClickUp() {
-        baseLayer.GetComponent<SpriteRenderer>().sprite = sprites[0];
+        if(hover == true) {
+            baseLayer.GetComponent<SpriteRenderer>().sprite = sprites[2];
+        } else {
+            baseLayer.GetComponent<SpriteRenderer>().sprite = sprites[0];
+        }
         keyUp.Play();
+    }
+
+    public override void OnHoverStart() {
+        hover = true;
+        baseLayer.GetComponent<SpriteRenderer>().sprite = sprites[2];
+        hoverSound.Play();
+        Debug.Log("Hover Start");
+    }
+
+    public override void OnHoverEnd() {
+        hover = false;
+        baseLayer.GetComponent<SpriteRenderer>().sprite = sprites[0];
+        Debug.Log("Hover End");
     }
 
     void Start() {
