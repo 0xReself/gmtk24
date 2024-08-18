@@ -117,10 +117,12 @@ public class Crafter : ItemHolder
 	{
 		remainingProcessTime = recipe.processingTime;
 		deleteAllItems();
+		Debug.Log("going through batches");
 		foreach (Recipe.ItemBatch batch in recipe.outputItems)
 		{
 			for (int i = 0; i < batch.itemCount; ++i)
 			{
+				Debug.Log("spawning new item " + batch.itemClass);
 				spawnItemClass(batch.itemClass, true); // todo: maybe not visibile output items
 			}
 		}
@@ -199,6 +201,7 @@ public class Crafter : ItemHolder
 	// this can change the behaviour how the newly spawned item is added to this if overridden in a subclass
 	protected override void addSpawnedItem(Item item)
 	{
+		Debug.Log("OUTPUT ITEM ADDED  " + item);
 		item.setSource(this, 0, -1, 0, 10.0f); // todo: very very short remaining processing time / delay? 
 		outputItems.Add(item);
 	}
