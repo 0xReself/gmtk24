@@ -183,15 +183,13 @@ public class ItemHolder : MonoBehaviour
 
 	private int calculateOtherInputPos(int direction, int steps, int size, Vector2Int position, Placeable otherPlaceable)
 	{
-		int xOffset = 0;
-		int yOffset = 0;
 		int otherSize = otherPlaceable.GetSize();
 		Vector2Int positionDifference = otherPlaceable.startPosition - position; // COMPARED WITH TOP LEFT CORNER OF OTHER ITEM HOLDER. distance is added to the steps of previous holder to get the new one
 		int otherSteps = size - steps - 1; // first invert steps, because side is mirrored
 		int otherDirection = 0;
+
 		switch (direction)
 		{
-
 			case 2: // right to left 
 				otherSteps -= positionDifference.y; // negative difference is added as positive
 				otherSteps += otherSize - size; // add size difference shift positive if other is bigger
@@ -211,7 +209,9 @@ public class ItemHolder : MonoBehaviour
 				otherDirection = 1;
 				break;
 		}
-		int otherInputSidePos = (otherDirection * otherSize - otherSize - 1 + otherSteps) % (otherSize * 4);
+		int paddedSize = otherSize - 1;
+		int otherInputSidePos = (otherDirection * otherSize - paddedSize + otherSteps) % (otherSize * 4);
+		Debug.Log("other size: " + otherSize + " distance: " + positionDifference + " othersteps: " + otherSteps + " otherdirection: " + otherDirection + " final input pos: " + otherInputSidePos);
 		return otherInputSidePos;
 	}
 
@@ -230,11 +230,12 @@ public class ItemHolder : MonoBehaviour
 		{
 			return null; 
 		}
-		int direction = ((outputSide + size - 1) % (size * 4)) / size; // 0=left, 1=top, 2=right, 3=bot
+		int direction = (outputSide + size - 1) % (size * 4) / size; // 0=left, 1=top, 2=right, 3=bot
 		int steps = (outputSide + size - 1) % size; // clockwise: top: 0,1,2  right : 0,1,2   bot: 0,2,1 (right to left)   left 0,1,2 (dowwn to up) 
+		
 		Vector2Int targetPos = calculateMyTargetPos(direction, steps, size, position);
-
 		ItemHolder otherHolder = getItemHolderAt(targetPos);
+		Debug.Log("found target: " + targetPos + " and holder " + otherHolder);
 
 		if (otherHolder != null)
 		{
@@ -350,8 +351,12 @@ public class ItemHolder : MonoBehaviour
 
 	public override string ToString()
 	{
-
+		Placeable placeable = GetComponent<Placeable>();
+		if (placeable == null)
+		{
+			Debug.LogError("trying to log a item holder that did not have a placeable attached");
+		}
 		return "ItemHolder{itemCount: " + items.Count + ", current output: " + currentOutputSide + " of " +
-			string.Join(",", getConnectionSides()) + ", processingSpeed: " + processingSpeed + ", maxItems: " + maxItems +  "}";
+			string.Join(",", getConnectionSides()) + ", processingSpeed: " + processingSpeed + ", maxItems: " + maxItems +  ", position: " + placeable.startPosition + "}";
 	}
 }
