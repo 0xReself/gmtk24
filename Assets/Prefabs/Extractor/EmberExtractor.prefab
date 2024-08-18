@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 1761733761880910958}
   - component: {fileID: 1000586696892187106}
   - component: {fileID: -5811582169228091337}
+  - component: {fileID: 7492264269471758789}
   m_Layer: 0
   m_Name: EmberExtractor
   m_TagString: Untagged
@@ -232,9 +233,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a43f07b7a71eaa2408fd37044381c91f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 60abcb9683c30fc4ea5243cc168683d8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -318,3 +319,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7492264269471758789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732090125897960743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819699b457066e24baee6d16f20c4c21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultConnections: 02000000020000000300000002000000
+  maxItems: 1
+  processingSpeed: 50
+  itemPrefab: {fileID: 6732090125897960743, guid: 3d4e6989123a42e478772975f8b522f2, type: 3}
+  ableToGenerate: 0

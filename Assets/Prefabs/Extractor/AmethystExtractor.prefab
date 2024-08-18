@@ -233,9 +233,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a43f07b7a71eaa2408fd37044381c91f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 60abcb9683c30fc4ea5243cc168683d8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -331,7 +331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819699b457066e24baee6d16f20c4c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultConnections: 01000000020000000300000002000000
+  defaultConnections: 02000000020000000300000002000000
   maxItems: 1
   processingSpeed: 50
-  itemPrefab: {fileID: 6732090125897960743, guid: 18797153958b7d44e8a4538c7e43e9f7, type: 3}
+  itemPrefab: {fileID: 6732090125897960743, guid: 230763487e8190b4b8bc6d38a2933cef, type: 3}
+  ableToGenerate: 0
