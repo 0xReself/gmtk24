@@ -42,7 +42,7 @@ public class ItemHolder : MonoBehaviour
 		}
 	}
 
-	private MapManager mapManager;
+	private static MapManager mapManager;
 
 	[SerializeField]
 	// this returns an array with the side configuration from left to right with the default rotation! 
@@ -74,7 +74,7 @@ public class ItemHolder : MonoBehaviour
 	{
 		if(cachedConnections == null)
 		{
-			Placeable placeable = this.GetComponent<Placeable>();
+			Placeable placeable = getPlaceable();
 			if (placeable == null)
 			{
 				Debug.LogError("Item Holder had no placeable attached!");
@@ -228,7 +228,7 @@ public class ItemHolder : MonoBehaviour
 	// can also be overridden in subclass, but it would be better to override processItems instead
 	public virtual TargetInformation getNextOutputItemHolder()
 	{
-		Placeable placeable = GetComponent<Placeable>();
+		Placeable placeable = getPlaceable();
 		int size = placeable.GetSize();
 		Vector2Int position = placeable.startPosition; // start tile of this is top left field
 		int outputSide = getNextOutputSide(); // output side starts top left to the left and end bottom left to the left (clockwise) 
@@ -245,7 +245,7 @@ public class ItemHolder : MonoBehaviour
 
 		if (otherHolder != null)
 		{
-			Placeable otherPlaceable = otherHolder.GetComponent<Placeable>();
+			Placeable otherPlaceable = otherHolder.getPlaceable();
 			if (otherPlaceable != null && otherPlaceable.isAlive())
 			{
 				int otherInputPos = calculateOtherInputPos(direction, steps, size, position, otherPlaceable);
@@ -316,6 +316,18 @@ public class ItemHolder : MonoBehaviour
 		}
 	}
 
+	// this is called when the placeable accosiated with this item holder is destroyed/deleted 
+	//
+	// OVERRIDE THIS IN A SUB CLASS, BUT CALL THE SUPER METHOD! 
+	public virtual void onDelete()
+	{
+		foreach(Item item in items)
+		{
+			item.delete();
+		}
+		items.Clear();
+	}
+
 	void Start()
 	{
 		onStart();
@@ -330,13 +342,23 @@ public class ItemHolder : MonoBehaviour
 		onUpdate();
 	}
 
-	private ItemHolder getItemHolderAt(Vector2Int targetPos)
+	public Placeable getPlaceable()
+	{
+		return GetComponent<Placeable>();
+	}
+
+	public static MapManager getMapManager()
 	{
 		if (mapManager == null)
 		{
 			mapManager = GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>(); // buggy, why unity? 
 		}
-		GameObject target = mapManager.Get(targetPos);
+		return mapManager;
+	}
+
+	public static ItemHolder getItemHolderAt(Vector2Int targetPos)
+	{
+		GameObject target = getMapManager().Get(targetPos);
 		if (target != null)
 		{
 			return target.GetComponent<ItemHolder>();
@@ -357,7 +379,7 @@ public class ItemHolder : MonoBehaviour
 
 	public override string ToString()
 	{
-		Placeable placeable = GetComponent<Placeable>();
+		Placeable placeable = getPlaceable();
 		if (placeable == null)
 		{
 			Debug.LogError("trying to log a item holder that did not have a placeable attached");
