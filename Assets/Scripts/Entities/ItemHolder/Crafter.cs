@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // crafter uses the normal list of items as inputs for the crafts
 public class Crafter : ItemHolder
@@ -95,6 +96,14 @@ public class Crafter : ItemHolder
 	private void finishCraft()
 	{
 		remainingProcessTime = recipe.processingTime;
+		deleteAllItems();
+		foreach (Recipe.ItemBatch batch in recipe.outputItems)
+		{
+			for (int i = 0; i < batch.itemCount; ++i)
+			{
+				//spawnItem();
+			}
+		}
 	}
 
 	private bool readyToCraft()
@@ -142,8 +151,54 @@ public class Crafter : ItemHolder
 		this.recipe = recipe;
 		remainingProcessTime = recipe.processingTime;
 		deleteAllItems();
+		deleteAllOutputItems();
 	}
 
 
+	// spawns the given item as if this item holder produced it if it has space for it and returns true
+	//
+	// otherwise returns false if the holder has no space for the item
+	//
+	// the itemprefab will also be instantiated at the current position of this itemHolder
+	public override bool spawnItem(GameObject itemPrefab, bool isVisible)
+	{
+		if (isOutputFull() || itemPrefab == null)
+		{
+			return false;
+		}
+		GameObject newItem = Instantiate(itemPrefab, transform.position, Quaternion.identity);
+		if (isVisible == false)
+		{
+			newItem.GetComponent<Renderer>().enabled = false;
+		}
+		Item item = newItem.GetComponent<Item>();
+		if (item == null)
+		{
+			Debug.LogError("new item did not have a item component");
+			Destroy(newItem);
+			return false;
+		}
+
+		item.setNewTarget(this, -1, 0);
+		item.moveToTarget();
+		Debug.Log("New Item spawned: " + item.ToString());
+		return true;
+	}
+
+	public override void onDelete()
+	{
+		base.onDelete();
+		deleteAllOutputItems();
+	}
+
+	// deletes all output items that are not already deleted from the default deleteallitems function
+	public void deleteAllOutputItems()
+	{
+		for (int i = 0; i < outputItems.Count; ++i)
+		{
+			outputItems.ElementAt(i--).delete();
+		}
+		outputItems.Clear();
+	}
 
 }

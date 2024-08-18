@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class ItemHolder : HolderBase
 {
-	// set to true on start and to false again on delete
-	private bool alive = false;
-
 	[SerializeField]
 	// Maximum amount of items this entity can contain at the same time. for crafters this is a multiplier to the recipe output count and does not affect the input items!!!!
 	protected int maxItems = 0;
@@ -28,7 +25,7 @@ public class ItemHolder : HolderBase
 	public virtual bool canAcceptItem(Item item, int connectionSidePosition, ItemHolder otherHolder)
 	{
 		ConnectionSide side = getConnectionSides()[connectionSidePosition];
-		return alive && isInputFull() == false && side <= ConnectionSide.input; // all input kinds, also [ConnectionSide.sideInput] !!!!!!
+		return isAlive() && isInputFull() == false && side <= ConnectionSide.input; // all input kinds, also [ConnectionSide.sideInput] !!!!!!
 	}
 
 	// An item is given to this item holder (sub class can add custom behaviour, but must return super.acceptItem)
@@ -80,7 +77,7 @@ public class ItemHolder : HolderBase
 	// can be overridden if for example this item holder needs at least n and m items of a specific type to be able to process 
 	public virtual bool canProcessItems()
 	{
-		return alive;
+		return isAlive();
 	}
 
 	// per default compares item count with max items and is used in canAcceptItem
@@ -99,9 +96,9 @@ public class ItemHolder : HolderBase
 	// this is called when the placeable accosiated with this item holder is destroyed/deleted 
 	//
 	// OVERRIDE THIS IN A SUB CLASS, BUT CALL THE SUPER METHOD! 
-	public virtual void onDelete()
+	public override void onDelete()
 	{
-		alive = false;
+		base.onDelete();
 		deleteAllItems();
 	}
 
@@ -155,7 +152,7 @@ public class ItemHolder : HolderBase
 	// otherwise returns false if the holder has no space for the item
 	//
 	// the itemprefab will also be instantiated at the current position of this itemHolder
-	public bool spawnItem(GameObject itemPrefab, bool isVisible)
+	public virtual bool spawnItem(GameObject itemPrefab, bool isVisible)
 	{
 		if (isOutputFull() || itemPrefab == null)
 		{
