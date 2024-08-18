@@ -183,6 +183,7 @@ public class HolderBase : MonoBehaviour
 		
 		if (outputSide < 0 || outputSide > getConnectionSides().Length)
 		{
+			Debug.LogError("invalid output size for position: " + position + " at side: " + outputSide + " and holder " + this);
 			return null;
 		}
 		int direction = (outputSide + size - 1) % (size * 4) / size; // 0=left, 1=top, 2=right, 3=bot
@@ -190,6 +191,7 @@ public class HolderBase : MonoBehaviour
 
 		Vector2Int targetPos = calculateMyTargetPos(direction, steps, size, position);
 		ItemHolder otherHolder = getItemHolderAt(targetPos);
+		
 		/// Debug.Log("found target: " + targetPos + " and holder " + otherHolder);
 
 		if (otherHolder != null)

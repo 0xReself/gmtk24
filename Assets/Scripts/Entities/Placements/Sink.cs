@@ -7,4 +7,9 @@ public class Sink : Placeable {
     void Start() {}
 
     void Update() {}
+
+	public override bool isAlive()
+	{
+		return true;
+	}
 }

@@ -733,21 +733,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   antCoinPrefab: {fileID: 6732090125897960743, guid: 18797153958b7d44e8a4538c7e43e9f7, type: 3}
-  azuriteFragmentPrefab: {fileID: 0}
-  amethystFragmentPrefab: {fileID: 0}
-  crimsonFragmentPrefab: {fileID: 0}
-  emberFragmentPrefab: {fileID: 0}
-  moonlightFragmentPrefab: {fileID: 0}
-  azuriteShardPrefab: {fileID: 0}
-  amethystShardPrefab: {fileID: 0}
-  crimsonShardPrefab: {fileID: 0}
-  emberShardPrefab: {fileID: 0}
-  moonlightShardPrefab: {fileID: 0}
-  azuriteEssencePrefab: {fileID: 0}
-  amethystEssencePrefab: {fileID: 0}
-  crimsonEssencePrefab: {fileID: 0}
-  emberEssencePrefab: {fileID: 0}
-  moonlightEssencePrefab: {fileID: 0}
+  azuriteFragmentPrefab: {fileID: 6732090125897960743, guid: 47d8d0030c3f06b45b81434d16a83591, type: 3}
+  amethystFragmentPrefab: {fileID: 6732090125897960743, guid: 230763487e8190b4b8bc6d38a2933cef, type: 3}
+  crimsonFragmentPrefab: {fileID: 6732090125897960743, guid: 9fe2b6cc12acdbb41ab734a77c7f9b35, type: 3}
+  emberFragmentPrefab: {fileID: 6732090125897960743, guid: 3d4e6989123a42e478772975f8b522f2, type: 3}
+  moonlightFragmentPrefab: {fileID: 6732090125897960743, guid: c31d163e50ad8a24889383f6a5f8b5dc, type: 3}
+  azuriteShardPrefab: {fileID: 6732090125897960743, guid: cee0f979e515277488eb8d440235778a, type: 3}
+  amethystShardPrefab: {fileID: 6732090125897960743, guid: 640b5ce94bdd430459a30dd9a9438669, type: 3}
+  crimsonShardPrefab: {fileID: 6732090125897960743, guid: 938d4cb2e87e378468858dd1b60a55b1, type: 3}
+  emberShardPrefab: {fileID: 6732090125897960743, guid: 95d2b34baa60bac42b57e25ade60c24e, type: 3}
+  moonlightShardPrefab: {fileID: 6732090125897960743, guid: 9e528c997d493a14ca57815989ae4095, type: 3}
+  azuriteEssencePrefab: {fileID: 6732090125897960743, guid: 24550d9e2ee325e478fca3959b1c76c7, type: 3}
+  amethystEssencePrefab: {fileID: 6732090125897960743, guid: 9dde126559b0aa5429df699d1b3c5686, type: 3}
+  crimsonEssencePrefab: {fileID: 6732090125897960743, guid: b16be3e02036c8f4a83563c0089c1934, type: 3}
+  emberEssencePrefab: {fileID: 6732090125897960743, guid: c221ee7bf1e0c294996c6dcf02f90b6f, type: 3}
+  moonlightEssencePrefab: {fileID: 6732090125897960743, guid: 69b43e9bb865ecf448dfe53b3f04d5fd, type: 3}
+  fragmentResourceAmount: 1
+  shardResourceAmount: 10
+  essenceResourceAmount: 100
 --- !u!4 &51089605
 Transform:
   m_ObjectHideFlags: 0
@@ -2888,7 +2891,7 @@ MonoBehaviour:
   gridCursor: {fileID: 1419410700}
   gridCursorSpeed: 50
   zoom: 0
-  zoomMultiplier: 1
+  zoomMultiplier: 2
   maxZoom: 8
   minZoom: 2
   velocity: 0
@@ -4084,7 +4087,6 @@ GameObject:
   - component: {fileID: 765521407}
   - component: {fileID: 765521408}
   - component: {fileID: 765521409}
-  - component: {fileID: 765521410}
   m_Layer: 5
   m_Name: Resources
   m_TagString: Untagged
@@ -4207,32 +4209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placementController: {fileID: 519420034}
---- !u!114 &765521410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 765521403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d7558cc6ad0f4540b07e8ad335d3c80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resources:
-  - {fileID: 1141396810}
-  - {fileID: 1846028634}
-  - {fileID: 1467822147}
-  - {fileID: 1453022798}
-  - {fileID: 405201425}
-  resourcesText:
-  - {fileID: 2026094480}
-  - {fileID: 1528331724}
-  - {fileID: 2030180582}
-  - {fileID: 42070398}
-  - {fileID: 1818939477}
-  resourceType: 0000000001000000020000000300000004000000
-  resourceManager: {fileID: 2093672380}
 --- !u!1 &799889020
 GameObject:
   m_ObjectHideFlags: 0
@@ -12779,55 +12755,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093509156}
   m_CullTransparentMesh: 1
---- !u!1 &2093672378
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2093672379}
-  - component: {fileID: 2093672380}
-  m_Layer: 0
-  m_Name: ResourceManager
-  m_TagString: ResourceManager
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2093672379
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093672378}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.4851303, y: -0.71274334, z: -9.962447}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2093672380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093672378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebe52b5b2cbcb174ebfab3ac7baa6529, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  azuriteEssence: 0
-  amethystEssence: 0
-  emberEssence: 0
-  crimsonEssence: 0
-  moonlightEssence: 0
 --- !u!1 &2124180696
 GameObject:
   m_ObjectHideFlags: 0
@@ -13122,4 +13049,3 @@ SceneRoots:
   - {fileID: 740150210}
   - {fileID: 919850535}
   - {fileID: 743017413}
-  - {fileID: 2093672379}

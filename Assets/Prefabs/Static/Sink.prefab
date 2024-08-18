@@ -553,6 +553,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1761733761880910958}
   - component: {fileID: 5840321063209619370}
+  - component: {fileID: 1759769412416500560}
   m_Layer: 0
   m_Name: Sink
   m_TagString: Untagged
@@ -599,15 +600,21 @@ MonoBehaviour:
   topLayer: {fileID: 0}
   pushUp: 2
   spawnTime: 0.2
-  mask:
-  - {fileID: 6925343586158815407}
-  - {fileID: 1802110961033695753}
-  - {fileID: 4508620678270213229}
-  sprites:
-  - {fileID: 796926734708565171}
-  - {fileID: 8664770855037813352}
-  - {fileID: 2593861893534674922}
-  - {fileID: 8753140968856378788}
+--- !u!114 &1759769412416500560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732090125897960743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471077c1e86f57647a16dbacfd47af0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultConnections: 010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  maxItems: 1000
+  processingSpeed: 1000
 --- !u!1 &6925343586158815407
 GameObject:
   m_ObjectHideFlags: 0
