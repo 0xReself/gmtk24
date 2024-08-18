@@ -12,7 +12,7 @@ public class ItemHolder : HolderBase
 
 	[SerializeField]
 	// how fast the item holder processes the item (also depends on the items processing time) 
-	protected int processingSpeed = 0;
+	protected float processingSpeed = 0;
 
 	// the items currently inside of this itemholder. (for crafters this is the input item queue, otherwise its input and output)
 	protected List<Item> items = new List<Item> { };
@@ -58,7 +58,7 @@ public class ItemHolder : HolderBase
 			{
 				item.process(processingSpeed * Time.deltaTime);
 				// todo: temp for testing
-				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10 * Time.deltaTime);
+				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10.0f * Time.deltaTime);
 
 			}
 			if (item.isProcessed())
@@ -171,10 +171,16 @@ public class ItemHolder : HolderBase
 			return false;
 		}
 
+		Debug.Log("New Item spawned in " + this + " the item : " + item.ToString());
+		addSpawnedItem(item);
+		return true;
+	}
+
+	// this can change the behaviour how the newly spawned item is added to this if overridden in a subclass
+	protected virtual void addSpawnedItem(Item item)
+	{
 		item.setNewTarget(this, -1, 0);
 		item.moveToTarget();
-		Debug.Log("New Item spawned: " + item.ToString());
-		return true;
 	}
 
 	// same as spawnItem, but uses ItemManager to look up the prefab for the item class

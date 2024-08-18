@@ -15,7 +15,7 @@ public class Crafter : ItemHolder
 	protected List<Item> outputItems = new List<Item> { };
 
 	// this is set from the recipe and displays the remaining time it takes to craft 
-	private double remainingProcessTime = 0;
+	private float remainingProcessTime = 0;
 
 	public override bool canAcceptItem(Item item, int connectionSidePosition, ItemHolder otherHolder)
 	{
@@ -50,7 +50,7 @@ public class Crafter : ItemHolder
 			{
 				item.process(processingSpeed * Time.deltaTime);
 				// todo: temp for testing, maybe instantly make them vanish? 
-				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10 * Time.deltaTime);
+				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10.0f * Time.deltaTime);
 
 			}
 		}
@@ -67,9 +67,20 @@ public class Crafter : ItemHolder
 			{
 				item.process(processingSpeed * Time.deltaTime);
 				// todo: temp for testing, maybe instantly spawn them on the next belt? 
-				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10 * Time.deltaTime);
+				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10.0f * Time.deltaTime);
 
 			}
+			if (item.isProcessed())
+			{
+				if (item.hasTarget() && item.canMoveToTarget())
+				{
+					outputItems.Remove(item);
+					--i;
+					item.moveToTarget();
+					Debug.Log("Item Moved from Crafter " + this + ": " + item.ToString());
+				}
+			}
+
 		}
 
 		if (readyToCraft())
@@ -101,9 +112,24 @@ public class Crafter : ItemHolder
 		{
 			for (int i = 0; i < batch.itemCount; ++i)
 			{
-				//spawnItem();
+				spawnItemClass(batch.itemClass, true); // todo: maybe not visibile output items
 			}
 		}
+	}
+
+	public override int getTargetOutputSideForItem(Item item)
+	{
+		int targetSide = recipe.getOutputSideForItem(item);
+		ConnectionSide[] connections = getConnectionSides();
+		for (int i = 0; i < connections.Length; ++i)
+		{
+			if (connections[i] == ConnectionSide.output && i == targetSide)
+			{
+				return i;
+			}
+		}
+		Debug.LogError("crafter " + this + " did not find a target for the item " + item);
+		return -1;
 	}
 
 	private bool readyToCraft()
@@ -113,7 +139,7 @@ public class Crafter : ItemHolder
 
 	private bool isProcessing()
 	{
-		return remainingProcessTime > 0;
+		return remainingProcessTime > 0.0000000001f;
 	}
 
 	// overridden to compare input items (old item list) with the recipe input count
@@ -155,34 +181,11 @@ public class Crafter : ItemHolder
 	}
 
 
-	// spawns the given item as if this item holder produced it if it has space for it and returns true
-	//
-	// otherwise returns false if the holder has no space for the item
-	//
-	// the itemprefab will also be instantiated at the current position of this itemHolder
-	public override bool spawnItem(GameObject itemPrefab, bool isVisible)
+	// this can change the behaviour how the newly spawned item is added to this if overridden in a subclass
+	protected override void addSpawnedItem(Item item)
 	{
-		if (isOutputFull() || itemPrefab == null)
-		{
-			return false;
-		}
-		GameObject newItem = Instantiate(itemPrefab, transform.position, Quaternion.identity);
-		if (isVisible == false)
-		{
-			newItem.GetComponent<Renderer>().enabled = false;
-		}
-		Item item = newItem.GetComponent<Item>();
-		if (item == null)
-		{
-			Debug.LogError("new item did not have a item component");
-			Destroy(newItem);
-			return false;
-		}
-
-		item.setNewTarget(this, -1, 0);
-		item.moveToTarget();
-		Debug.Log("New Item spawned: " + item.ToString());
-		return true;
+		item.setSource(this, 0, -1, 0, 10.0f); // todo: very very short remaining processing time / delay? 
+		outputItems.Add(item);
 	}
 
 	public override void onDelete()
