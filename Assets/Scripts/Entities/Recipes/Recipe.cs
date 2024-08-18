@@ -56,7 +56,7 @@ public class Recipe
 	public List<ItemBatch> inputItems = new List<ItemBatch> { };
 	// outputted from one crafting step. IMPORTANT: if only one output resource is used, but you want it on both output slots, add the same item class twice with different output slots, but once with no amount
 	public List<ItemBatch> outputItems = new List<ItemBatch> { };
-	// the amount of time it takes the crafter to create this recipe 
+	// the amount of steps it takes the crafter to create this recipe per second
 	public float processingTime;
 
 	public Recipe(List<ItemBatch> inputItems, List<ItemBatch> outputItems, float processingTime)
@@ -95,7 +95,7 @@ public class Recipe
 		ItemBatch batch = getBatchForItemClass(itemClass, inputItems);
 		if(batch == null)
 		{
-			Debug.LogError("item batch did not contain the item class");
+			Debug.LogError("item batch " + batch + " did not contain the item class " + itemClass);
 			return false;
 		}
 		return batch.isContainedIn(items);
@@ -119,7 +119,7 @@ public class Recipe
 
 		if (outputSides.Count <= 0)
 		{
-			Debug.LogError("item batch did not contain the item");
+			Debug.LogError("item batches of " + this + "did not contain the item " + item);
 		}
 
 		return outputSides;

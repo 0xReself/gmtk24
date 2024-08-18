@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
 	[SerializeField]
-	// The amount of time it takes for item holders to process this item. this is ignored for the crafter
+	// The amount of time it takes for item holders to process this item. this is ignored for the crafter. amount of steps it takes to move an item per second
 	private float processingTime = 0;
 
 	// the remaining time it takes to process the item within the current item holder 
