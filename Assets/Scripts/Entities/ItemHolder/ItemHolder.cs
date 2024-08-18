@@ -147,9 +147,10 @@ public class ItemHolder : HolderBase
 	{
 		for (int i = 0; i < items.Count; ++i)
 		{
-			items.ElementAt(i--).delete();
+			Item item = items.ElementAt(i--);
+			Debug.Log("deleting item: " + item);
+			item.delete();
 		}
-		items.Clear();
 	}
 
 	// spawns the given item as if this item holder produced it if it has space for it and returns true
