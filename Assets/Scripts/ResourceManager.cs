@@ -9,6 +9,8 @@ public enum Resource {
     Ember = 2,
     Crimson = 3,
     Moonlight = 4,
+    NONE = 5,
+    ALL = 6,
 }
 
 public class ResourceManager : MonoBehaviour {
@@ -46,10 +48,21 @@ public class ResourceManager : MonoBehaviour {
                 moonlightEssence += amount;
                 break;
 
-            default:
-                azuriteEssence += amount;
-                break;
-        }
+			case Resource.Azurite:
+				azuriteEssence += amount;
+				break;
+
+			case Resource.ALL:
+				amethystEssence += amount;
+				emberEssence += amount;
+				crimsonEssence += amount;
+				moonlightEssence += amount;
+				azuriteEssence += amount;
+				break;
+
+			default:
+				break;
+		}
     }
 
     public int GetResource(Resource resource) {
@@ -66,8 +79,11 @@ public class ResourceManager : MonoBehaviour {
             case Resource.Moonlight:
                 return moonlightEssence;
 
-            default:
-                return azuriteEssence;
+			case Resource.Azurite:
+				return azuriteEssence;
+
+			default:
+                return 0;
         }
     }
 
@@ -101,13 +117,25 @@ public class ResourceManager : MonoBehaviour {
                 moonlightEssence -= amount;
                 return true;
 
-            default:
-                if (amount > azuriteEssence) {
-                    return false;
-                }
-                azuriteEssence -= amount;
-                return true;
-        }
+			case Resource.Azurite:
+				if (amount > azuriteEssence)
+				{
+					return false;
+				}
+				azuriteEssence -= amount;
+				return true;
+
+			case Resource.ALL:
+				amethystEssence -= amount;
+				emberEssence -= amount;
+				crimsonEssence -= amount;
+				moonlightEssence -= amount;
+				azuriteEssence -= amount;
+				return true;
+
+			default:
+				return false;
+		}
     }
 
     public bool CanRemove(Resource resource, int amount) {
@@ -136,12 +164,19 @@ public class ResourceManager : MonoBehaviour {
                 }
                 return true;
 
-            default:
-                if (amount > azuriteEssence) {
-                    return false;
-                }
-                return true;
-        }
+			case Resource.Azurite:
+				if (amount > azuriteEssence)
+				{
+					return false;
+				}
+				return true;
+
+			case Resource.ALL:
+				return true;
+
+			default:
+				return false;
+		}
     }
 
     void Start() {

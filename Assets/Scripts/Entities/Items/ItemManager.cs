@@ -22,11 +22,17 @@ public class ItemManager : MonoBehaviour
 	public GameObject emberShardPrefab;
 	public GameObject moonlightShardPrefab;
 
+	// Essence
 	public GameObject azuriteEssencePrefab;
 	public GameObject amethystEssencePrefab;
 	public GameObject crimsonEssencePrefab;
 	public GameObject emberEssencePrefab;
 	public GameObject moonlightEssencePrefab;
+
+	// Resource Amounts
+	public int fragmentResourceAmount;
+	public int shardResourceAmount;
+	public int essenceResourceAmount;
 
 	void Start()
 	{
@@ -65,6 +71,31 @@ public class ItemManager : MonoBehaviour
 		if (itemClass == typeof(MoonlightEssence)) return moonlightEssencePrefab;
 
 		return null; 
+	}
+
+	// returns the resource for the item and how much it gives depending on the item
+	public (Resource, int) getResourceFromItem(Item item)
+	{
+		if (item is AmethystShard) return (Resource.Amethyst, shardResourceAmount);
+		if (item is AzuriteShard) return (Resource.Azurite, shardResourceAmount);
+		if (item is CrimsonShard) return (Resource.Crimson, shardResourceAmount);
+		if (item is EmberShard) return (Resource.Ember, shardResourceAmount);
+		if (item is MoonlightShard) return (Resource.Moonlight, shardResourceAmount);
+
+		if (item is AmethystFragment) return (Resource.Amethyst, fragmentResourceAmount);
+		if (item is AzuriteFragment) return (Resource.Azurite, fragmentResourceAmount);
+		if (item is CrimsonFragment) return (Resource.Crimson, fragmentResourceAmount);
+		if (item is EmberFragment) return (Resource.Ember, fragmentResourceAmount);
+		if (item is MoonlightFragment) return (Resource.Moonlight, fragmentResourceAmount);
+
+		if (item is AmethystEssence) return (Resource.Amethyst, essenceResourceAmount);
+		if (item is AzuriteEssence) return (Resource.Azurite, essenceResourceAmount);
+		if (item is CrimsonEssence) return (Resource.Crimson, essenceResourceAmount);
+		if (item is EmberEssence) return (Resource.Ember, essenceResourceAmount);
+		if (item is MoonlightEssence) return (Resource.Moonlight, essenceResourceAmount);
+
+		if (item is AntCoin) return (Resource.ALL, shardResourceAmount + fragmentResourceAmount + essenceResourceAmount);
+		return (Resource.NONE, 0); // needs default return 
 	}
 	
 }
