@@ -93,7 +93,7 @@ public class ItemHolder : MonoBehaviour
 	public virtual bool canAcceptItem(Item item, int connectionSidePosition, ItemHolder otherHolder)
 	{
 		ConnectionSide side = getConnectionSides()[connectionSidePosition];
-		return items.Count < maxItems && side <= ConnectionSide.input; // all input kinds, also [ConnectionSide.sideInput] !!!!!!
+		return isInputFull() == false && side <= ConnectionSide.input; // all input kinds, also [ConnectionSide.sideInput] !!!!!!
 	}
 
 	// An item is given to this item holder (sub class can add custom behaviour, but must return super.acceptItem)
@@ -114,7 +114,7 @@ public class ItemHolder : MonoBehaviour
 	// the itemprefab will also be instantiated at the current position of this itemHolder
 	public bool spawnItem(GameObject itemPrefab, bool isVisible)
 	{
-		if (items.Count > maxItems || itemPrefab == null)
+		if (isOutputFull() || itemPrefab == null)
 		{
 			return false;
 		}
@@ -143,8 +143,9 @@ public class ItemHolder : MonoBehaviour
 		return spawnItem(getItemManager().getItemPrefab(itemClass), isVisible);
 	}
 
-	// cycles through the output sides of the current item holder. this returns -1 if there are no output sides at all
-	public int getNextOutputSide()
+	// per default cycles through the output sides of the current item holder. this returns -1 if there are no output sides at all
+	// can be adjusted 
+	public virtual int getNextOutputSide()
 	{
 		ConnectionSide[] connections = getConnectionSides();
 		currentOutputSide++;
@@ -226,7 +227,7 @@ public class ItemHolder : MonoBehaviour
 	// per default this just circles through the connection output sides if there is a connected holder on that side!!!). returns the holder with the connection side index!
 	//
 	// can also be overridden in subclass, but it would be better to override processItems instead
-	public virtual TargetInformation getNextOutputItemHolder()
+	public virtual TargetInformation getNextOutputItemHolder(Item item)
 	{
 		Placeable placeable = getPlaceable();
 		int size = placeable.GetSize();
@@ -249,7 +250,7 @@ public class ItemHolder : MonoBehaviour
 			if (otherPlaceable != null && otherPlaceable.isAlive())
 			{
 				int otherInputPos = calculateOtherInputPos(direction, steps, size, position, otherPlaceable);
-				if (items.Count > 0 && otherHolder.canAcceptItem(items.ElementAt(0), otherInputPos, this))
+				if (item != null && otherHolder.canAcceptItem(item, otherInputPos, this))
 				{
 					return new TargetInformation(otherHolder, outputSide, otherInputPos);
 				}
@@ -304,7 +305,7 @@ public class ItemHolder : MonoBehaviour
 	// calls getNextOutputItemHolder and THIS MAY SET THE target of the item to null if there is no valid holder connected!
 	protected void resetTargetForItem(Item item)
 	{
-		TargetInformation info = getNextOutputItemHolder();
+		TargetInformation info = getNextOutputItemHolder(item);
 		if (info != null)
 		{
 			item.setNewTarget(info.targetHolder, info.myOutputSide, info.otherInputSide);
@@ -315,6 +316,19 @@ public class ItemHolder : MonoBehaviour
 			item.setNewTarget(null, getNextOutputSide(), 0);
 		}
 	}
+
+	// per default compares item count with max items and is used in canAcceptItem
+	protected virtual bool isInputFull()
+	{
+		return items.Count >= maxItems;
+	}
+
+	// per default compares item count with max items and is used in spawnItem
+	protected virtual bool isOutputFull()
+	{
+		return items.Count >= maxItems; 
+	}
+
 
 	// this is called when the placeable accosiated with this item holder is destroyed/deleted 
 	//
