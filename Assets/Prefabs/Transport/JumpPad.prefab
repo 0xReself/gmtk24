@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 1761733761880910958}
   - component: {fileID: 9128226835779663463}
   - component: {fileID: 4341991071755776723}
-  - component: {fileID: -116928413029200893}
+  - component: {fileID: -7205609520973322690}
   m_Layer: 0
   m_Name: JumpPad
   m_TagString: Untagged
@@ -312,8 +312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ea8fce6e060ebe4986f9b016b7e50a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourcesToBuy: 
-  resourceAmount: 
+  resourcesToBuy: 03000000
+  resourceAmount: e8030000
   startPosition: {x: 0, y: 0}
   size: {x: 1, y: 1}
   rotation: 0
@@ -324,7 +324,7 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: 6f6be329c4d883b439cbfe30697cde7f, type: 3}
   - {fileID: 21300000, guid: 362760388cd6ae741b696cfb7e9ecc2f, type: 3}
---- !u!114 &-116928413029200893
+--- !u!114 &-7205609520973322690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

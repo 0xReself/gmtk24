@@ -8,10 +8,10 @@ using UnityEngine.Tilemaps;
 
 public class Placeable : MonoBehaviour {
     [SerializeField]
-    private List<Resource> resourcesToBuy;
+    protected List<Resource> resourcesToBuy;
 
     [SerializeField]
-    private List<int> resourceAmount;
+    protected List<int> resourceAmount;
     
     // the current position of the placeable inside of the map of mapmanager
     public Vector2Int startPosition = Vector2Int.zero;
@@ -44,7 +44,7 @@ public class Placeable : MonoBehaviour {
     // preview 
     protected bool isPreview = true;
 
-    private ResourceManager resourceManager;
+    protected ResourceManager resourceManager;
     
     void Awake() {
         resourceManager = GameObject.FindGameObjectWithTag("ResourceManager").GetComponent<ResourceManager>();
