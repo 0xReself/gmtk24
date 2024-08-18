@@ -34,6 +34,9 @@ public class PlacementController : MonoBehaviour {
 
     private int currentRotation = 0;
 
+    [SerializeField]
+    private AudioSource deleteSound;
+
     void Start() {
         cameraController = this.GetComponent<CameraController>();
     }
@@ -105,10 +108,15 @@ public class PlacementController : MonoBehaviour {
         GameObject placedObject = mapManager.Get(position);
         
         if (placedObject != null) {
-            Placeable _placeable = placedObject.GetComponent<Placeable>();
+            Placeable placeable = placedObject.GetComponent<Placeable>();
+
+            if(placeable.startPosition == new Vector2Int(-1, 1)) {
+                return;
+            }
 
             if(Input.GetKey(KeyCode.Mouse0) && ! disabled) {
-                mapManager.Remove(_placeable.startPosition, _placeable.GetEndPosition(_placeable.startPosition));
+                deleteSound.Play();
+                mapManager.Remove(placeable.startPosition, placeable.GetEndPosition(placeable.startPosition));
                 Destroy(placedObject);
             }
         }
@@ -139,6 +147,22 @@ public class PlacementController : MonoBehaviour {
         
         if(placingMode == PlacingMode.Deleting) {
             HandleDelete();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && placingMode == PlacingMode.Idle) {
+            GameObject objectClicked = mapManager.Get(ToVector2Int(cameraController.GetGridPosition()));
+            if(objectClicked != null) {
+                Placeable placeable = objectClicked.GetComponent<Placeable>();
+                placeable.OnClickDown();
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse0) && placingMode == PlacingMode.Idle) {
+            GameObject objectClicked = mapManager.Get(ToVector2Int(cameraController.GetGridPosition()));
+            if(objectClicked != null) {
+                Placeable placeable = objectClicked.GetComponent<Placeable>();
+                placeable.OnClickUp();
+            }
         }
     }
 }

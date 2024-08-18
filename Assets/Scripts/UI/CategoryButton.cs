@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CategoryButton : MonoBehaviour, IPointerClickHandler {
+public class CategoryButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
     [SerializeField]
     protected GameObject shop;
 
@@ -15,16 +15,31 @@ public class CategoryButton : MonoBehaviour, IPointerClickHandler {
     [SerializeField]
     protected bool activated = false;
 
+    [SerializeField]
+    protected List<Sprite> sprites;
+
+    [SerializeField]
+    protected Image icon;
+
+    [SerializeField]
+    protected AudioSource hover;
+
+    [SerializeField]
+    protected AudioSource clicked;
+
     public virtual void SetClosed() {
         GetComponent<Image>().color = new Color(0.09f, 0.09f, 0.09f);
+        icon.sprite = sprites[0];
         activated = false;
     }
 
     public virtual void SetOpen() {
-        GetComponent<Image>().color = new Color(1f, 1f, 1f);
+        GetComponent<Image>().color = new Color(0.961f, 0.961f, 0.961f);
+        icon.sprite = sprites[1];
     }
 
     public virtual void OnPointerClick(PointerEventData eventData) {
+        clicked.Play();
         if (activated == true) {
             shopManager.CloseOpenUI();
             activated = false;
@@ -43,5 +58,18 @@ public class CategoryButton : MonoBehaviour, IPointerClickHandler {
 
     void Update() {
         
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) {
+        hover.Play();
+        if (activated == false) {
+            GetComponent<Image>().color = new Color(0.12f, 0.12f, 0.12f);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData) {
+        if (activated == false) {
+            SetClosed();
+        }
     }
 }

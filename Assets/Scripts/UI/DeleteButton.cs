@@ -15,12 +15,21 @@ public class DeleteButton : CategoryButton {
     }
 
     public override void SetOpen() {
-        GetComponent<Image>().color = new Color(1f, 0f, 0f);
+        GetComponent<Image>().color = new Color(0.937f, 0.267f, 0.267f);
     }
 
     public override void OnPointerClick(PointerEventData eventData) {
+        clicked.Play();
+        if (activated == true) {
+            shopManager.CloseOpenUI();
+            placementController.ChangeSelectedPlaceable(null, PlacingMode.Idle);
+            activated = false;
+            return;
+        }
+
         shopManager.CloseOpenUI();
         SetOpen();
         placementController.ChangeSelectedPlaceable(null, PlacingMode.Deleting);
+        activated = true;
     }
 }

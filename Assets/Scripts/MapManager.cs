@@ -6,10 +6,18 @@ using UnityEngine;
 public class MapManager : MonoBehaviour {
 
     [SerializeField]
+    private GameObject corePrefab;
+
+    [SerializeField]
     private Dictionary<Vector2Int, GameObject> map;
 
     void Start() {
         map = new Dictionary<Vector2Int, GameObject>();
+        GameObject placedCore = Instantiate(corePrefab, new Vector2(-1.5f, 1.5f), Quaternion.identity);
+        Placeable placeable = placedCore.GetComponent<Placeable>();
+        placeable.startPosition = new Vector2Int(-1, 1);
+
+        Set(placedCore, placeable.startPosition, placeable.GetEndPosition(placeable.startPosition));
     }
 
     void Update() {}
