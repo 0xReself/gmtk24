@@ -6,7 +6,6 @@ using UnityEngine.Playables;
 using UnityEngine.WSA;
 using static UnityEditor.Progress;
 
-public class Splitter : ItemHolder
-{
+public class Splitter : ItemHolder {
 
 }
