@@ -347,13 +347,18 @@ public class ItemHolder : MonoBehaviour
 		return GetComponent<Placeable>();
 	}
 
-	public static ItemHolder getItemHolderAt(Vector2Int targetPos)
+	public static MapManager getMapManager()
 	{
 		if (mapManager == null)
 		{
 			mapManager = GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>(); // buggy, why unity? 
 		}
-		GameObject target = mapManager.Get(targetPos);
+		return mapManager;
+	}
+
+	public static ItemHolder getItemHolderAt(Vector2Int targetPos)
+	{
+		GameObject target = getMapManager().Get(targetPos);
 		if (target != null)
 		{
 			return target.GetComponent<ItemHolder>();
