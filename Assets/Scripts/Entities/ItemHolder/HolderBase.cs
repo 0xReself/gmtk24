@@ -245,6 +245,11 @@ public class HolderBase : MonoBehaviour
 		return null;
 	}
 
+	public virtual void onDelete()
+	{
+		alive = false;
+	}
+
 	public bool isAlive()
 	{
 		return alive;
