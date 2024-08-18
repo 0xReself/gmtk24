@@ -103,7 +103,10 @@ public class HolderBase : MonoBehaviour
 		int output = getNextOutputSide();
 		if( output == -1 )
 		{
-			Debug.LogError("holder " + this + " did not have outputs defined for the item " + item);
+			if(hasNoOutput() == false)
+			{
+				Debug.LogError("holder " + this + " did not have outputs defined for the item " + item);
+			}
 		}
 		return output;
 	}
@@ -177,6 +180,10 @@ public class HolderBase : MonoBehaviour
 	// can also be overridden in subclass, but it would be better to override processItems instead
 	public virtual TargetInformation getNextOutputItemHolder(Item item, int outputSide)
 	{
+		if(hasNoOutput())
+		{
+			return null; // for example sink
+		}
 		Placeable placeable = getPlaceable();
 		int size = placeable.GetSize();
 		Vector2Int position = placeable.startPosition; // start tile of this is top left field
@@ -275,6 +282,12 @@ public class HolderBase : MonoBehaviour
 	public void awake()
 	{
 		alive = true;
+	}
+
+	// can be overridden to supress errors for the sink or similar stuff that has no output
+	public virtual bool hasNoOutput()
+	{
+		return false;
 	}
 
 	// used in item holder

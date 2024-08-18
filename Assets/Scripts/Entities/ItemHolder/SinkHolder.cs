@@ -36,6 +36,11 @@ public class SinkHolder : ItemHolder
 		}
 	}
 
+	public override bool hasNoOutput()
+	{
+		return true;
+	}
+
 	public ResourceManager getResourceManager()
 	{
 		return GameObject.FindGameObjectWithTag("ResourceManager").GetComponent<ResourceManager>();
