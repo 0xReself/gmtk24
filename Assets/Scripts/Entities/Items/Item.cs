@@ -1,10 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.WSA;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEditor.FilePathAttribute;
-using static UnityEditor.Progress;
 
 public class Item : MonoBehaviour
 {
