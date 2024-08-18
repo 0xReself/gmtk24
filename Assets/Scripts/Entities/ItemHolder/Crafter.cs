@@ -3,31 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// crafter uses the normal list of items as inputs for the crafts
 public class Crafter : ItemHolder
 {
 
 	// the current recipe of the crafter. this can also be null 
-	public Recipe recipe;
+	private Recipe recipe;
 
 	// this is the list of output items this crafter produces! it stores the output amount of the recipe multiplied by [maxItems]
 	protected List<Item> outputItems = new List<Item> { };
 
+	// this is set from the recipe and displays the remaining time it takes to craft 
+	private double remainingProcessTime = 0;
+
 	public override bool canAcceptItem(Item item, int connectionSidePosition, ItemHolder otherHolder)
 	{
-		if (recipe == null)
+		if (recipe == null || base.canAcceptItem(item, connectionSidePosition, otherHolder) == false)
 		{
-			return false;
+			return false; // still check base function (which already uses overridden isfull methods from below)! 
 		}
-		// TODO: DOCH BASE AUFRUFEN 
-		ConnectionSide side = getConnectionSides()[connectionSidePosition];
-		return items.Count < maxItems && side <= ConnectionSide.input; // not using base method here, because items count is used differntly 
+
+		if(recipe.inputFullOf(items, item.GetType()))
+		{
+			return false; // only accept items of this type until we have enough for the craft
+		}
+
+		return true; 
 	}
 
 	public override bool canProcessItems()
 	{
 		if (recipe == null || base.canProcessItems() == false)
 		{
-			return false;
+			return false; // still check base
 		}
 		return true; 
 	}
@@ -62,7 +70,80 @@ public class Crafter : ItemHolder
 
 			}
 		}
+
+		if (readyToCraft())
+		{
+			if (isProcessing())
+			{
+				process();
+			}
+            else
+            {
+				finishCraft();
+			}
+        }
+
 	}
+
+	private void process()
+	{
+		remainingProcessTime -= processingSpeed * Time.deltaTime;
+		// todo: maybe play some animation while crafting? 
+	}
+
+	// this also needs to reset everything
+	private void finishCraft()
+	{
+		remainingProcessTime = recipe.processingTime;
+	}
+
+	private bool readyToCraft()
+	{
+		return isInputFull() == true && isOutputFull() == false; // can craft only if the input is full and the output is not full
+	}
+
+	private bool isProcessing()
+	{
+		return remainingProcessTime > 0;
+	}
+
+	// overridden to compare input items (old item list) with the recipe input count
+	protected override bool isInputFull()
+	{
+		return items.Count >= getMaxInputItems();
+	}
+
+	// overridden to compare new output items and also count the recipe output
+	protected override bool isOutputFull()
+	{
+		return outputItems.Count >= getMaxOutputItems();
+	}
+	public int getMaxInputItems()
+	{
+		if(recipe == null)
+		{
+			return 0;
+		}
+		return recipe.getTotalInputCount();
+	}
+
+	// IMPORTANT: multiply recipe outputcount with maxitems!
+	public int getMaxOutputItems()
+	{
+		if (recipe == null)
+		{
+			return 0;
+		}
+		return recipe.getTotalOutputCount() * maxItems;
+	}
+
+	public void setRecipe(Recipe recipe)
+	{
+		this.recipe = recipe;
+		remainingProcessTime = recipe.processingTime;
+		deleteAllItems();
+	}
+
 
 
 }
