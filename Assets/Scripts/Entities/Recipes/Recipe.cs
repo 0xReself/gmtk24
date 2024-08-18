@@ -86,7 +86,7 @@ public class Recipe
 	// false if not found 
 	public bool inputFullOf(List<Item> items, Type itemClass)
 	{
-		ItemBatch batch = getBatchForItemClass(itemClass);
+		ItemBatch batch = getBatchForItemClass(itemClass, inputItems);
 		if(batch == null)
 		{
 			Debug.LogError("item batch did not contain the item class");
@@ -99,7 +99,7 @@ public class Recipe
 	// -1 if not found 
 	public int getOutputSideForItem(Item item)
 	{
-		ItemBatch batch = getBatchForItemClass(item.GetType());
+		ItemBatch batch = getBatchForItemClass(item.GetType(), outputItems);
 		if (batch == null)
 		{
 			Debug.LogError("item batch did not contain the item");
@@ -108,9 +108,9 @@ public class Recipe
 		return batch.connectionSide;
 	}
 
-	public ItemBatch getBatchForItemClass(Type itemClass)
+	public ItemBatch getBatchForItemClass(Type itemClass, List<ItemBatch> batches)
 	{
-		foreach (ItemBatch batch in inputItems)
+		foreach (ItemBatch batch in batches)
 		{
 			if (batch.itemClass == itemClass)
 			{

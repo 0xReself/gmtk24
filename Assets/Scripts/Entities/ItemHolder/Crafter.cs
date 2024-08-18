@@ -204,4 +204,9 @@ public class Crafter : ItemHolder
 		outputItems.Clear();
 	}
 
+	public override bool containsOneOutputItem()
+	{
+		return outputItems.Count > 0;
+	}
+
 }

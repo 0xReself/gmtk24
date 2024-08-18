@@ -92,6 +92,11 @@ public class ItemHolder : HolderBase
 		return items.Count >= maxItems; 
 	}
 
+	// if this item holder contains at least one item to output. only overridden in crafter
+	public virtual bool containsOneOutputItem()
+	{
+		return items.Count > 0;
+	}
 
 	// this is called when the placeable accosiated with this item holder is destroyed/deleted 
 	//
@@ -120,7 +125,7 @@ public class ItemHolder : HolderBase
 	// map manager is still null here
 	protected virtual void onStart()
 	{
-
+		
 	}
 
 	protected virtual void onUpdate()
