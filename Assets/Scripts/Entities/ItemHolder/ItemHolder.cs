@@ -11,7 +11,7 @@ public class ItemHolder : HolderBase
 	protected int maxItems = 0;
 
 	[SerializeField]
-	// how fast the item holder processes the item (also depends on the items processing time) 
+	// how fast the item holder processes the item (also depends on the items processing time). set in steps per second
 	protected float processingSpeed = 0;
 
 	// the items currently inside of this itemholder. (for crafters this is the input item queue, otherwise its input and output)
