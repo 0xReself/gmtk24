@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 1761733761880910958}
   - component: {fileID: 1000586696892187106}
   - component: {fileID: -5811582169228091337}
+  - component: {fileID: 301057351586407206}
   m_Layer: 0
   m_Name: MoonlightExtractor
   m_TagString: Untagged
@@ -318,3 +319,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &301057351586407206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732090125897960743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 819699b457066e24baee6d16f20c4c21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultConnections: 02000000020000000300000002000000
+  maxItems: 1
+  processingSpeed: 50
+  itemPrefab: {fileID: 6732090125897960743, guid: c31d163e50ad8a24889383f6a5f8b5dc, type: 3}
+  ableToGenerate: 0

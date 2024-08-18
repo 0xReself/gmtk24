@@ -117,6 +117,9 @@ public class PlacementController : MonoBehaviour {
             if(Input.GetKey(KeyCode.Mouse0) && ! disabled) {
                 deleteSound.Play();
                 mapManager.Remove(placeable.startPosition, placeable.GetEndPosition(placeable.startPosition));
+                if (placedObject.GetComponent<ItemHolder>() != null) {
+                    placedObject.GetComponent<ItemHolder>().onDelete();
+                }
                 Destroy(placedObject);
             }
         }
