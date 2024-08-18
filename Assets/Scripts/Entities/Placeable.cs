@@ -7,6 +7,11 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Placeable : MonoBehaviour {
+    [SerializeField]
+    private List<Resource> resourcesToBuy;
+
+    [SerializeField]
+    private List<int> resourceAmount;
     
     // the current position of the placeable inside of the map of mapmanager
     public Vector2Int startPosition = Vector2Int.zero;
@@ -38,6 +43,28 @@ public class Placeable : MonoBehaviour {
 
     // preview 
     protected bool isPreview = true;
+
+    private ResourceManager resourceManager;
+    
+    void Awake() {
+        resourceManager = GameObject.FindGameObjectWithTag("ResourceManager").GetComponent<ResourceManager>();
+    }
+
+    public bool CanBuy() {
+        bool canBuy = true;
+        for (int i = 0; i < resourceAmount.Count; i++) {
+            if(!resourceManager.CanRemove(resourcesToBuy[i], resourceAmount[i])) {
+                canBuy = false;
+            }
+        }
+        return canBuy;
+    }
+
+    public void Buy() {
+        for (int i = 0; i < resourceAmount.Count; i++) {
+            resourceManager.RemoveResource(resourcesToBuy[i], resourceAmount[i]);
+        }
+    }
 
     public void SetColor(Color color) {
         baseLayer.GetComponent<SpriteRenderer>().color = color;

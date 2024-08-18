@@ -81,6 +81,12 @@ public class PlacementController : MonoBehaviour {
 
         GameObject placedObject = Instantiate(selectedPlaceablePrefab, cameraController.GetCenterGridPosition(), Quaternion.identity);
         Placeable _placeable = placedObject.GetComponent<Placeable>();
+        if(!_placeable.CanBuy()) {
+            Destroy(placedObject);
+            return;
+        }
+
+        _placeable.Buy();
         _placeable.SetSortingLayer(-2 * (int)cameraController.GetGridPosition().y);
         _placeable.startPosition = start;
         _placeable.StartSpawn();

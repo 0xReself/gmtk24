@@ -19,9 +19,34 @@ public class ItemButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
 
     [SerializeField]
     protected AudioSource click;
+
+    [SerializeField]
+    private List<Resource> resourcesToBuy;
+
+    [SerializeField]
+    private List<int> resourceAmount;
+
+    private ResourceManager resourceManager;
     
+    void Awake() {
+        resourceManager = GameObject.FindGameObjectWithTag("ResourceManager").GetComponent<ResourceManager>();
+    }
+
     public void OnPointerClick(PointerEventData eventData) {
         click.Play();
+        bool canBuy = true;
+        for (int i = 0; i < resourceAmount.Count; i++) {
+            if(!resourceManager.CanRemove(resourcesToBuy[i], resourceAmount[i])) {
+                canBuy = false;
+            }
+        }
+
+        if(canBuy) {
+            Buy();
+        }
+    }
+
+    public void Buy() {
         this.GetComponent<Image>().color = new Color(0.09f, 0.09f, 0.09f, 0.0f);
         shopManager.CloseOpenUI();
         placementController.disabled = false;
