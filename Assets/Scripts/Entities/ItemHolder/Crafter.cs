@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Progress;
 
 // crafter uses the normal list of items as inputs for the crafts
 public class Crafter : ItemHolder
@@ -212,7 +213,9 @@ public class Crafter : ItemHolder
 	{
 		for (int i = 0; i < outputItems.Count; ++i)
 		{
-			outputItems.ElementAt(i--).delete();
+			Item item = outputItems.ElementAt(i);
+			Debug.Log("deleting output item: " + item);
+			item.delete();
 		}
 		outputItems.Clear();
 	}
