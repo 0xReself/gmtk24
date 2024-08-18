@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Splitter : ItemHolder 
+public class Purifier : Crafter
 {
 
 }

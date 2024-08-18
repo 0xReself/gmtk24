@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-
 	[SerializeField]
-	// the image to render the item
-	protected GameObject sprite;
-
-	[SerializeField]
-	// The amount of time it takes for item holders to process this item  
+	// The amount of time it takes for item holders to process this item. this is ignored for the crafter
 	private double processingTime = 0;
 
 	// the remaining time it takes to process the item within the current item holder 
@@ -102,6 +97,16 @@ public class Item : MonoBehaviour
 
 	public void delete()
 	{
+		if(currentHolder != null)
+		{
+			currentHolder.removeItem(this);
+		}
+		if (nextOutputHolder != null)
+		{
+			nextOutputHolder.removeItem(this);
+		}
+		currentHolder = null; 
+		nextOutputHolder = null;
 		Destroy(this.gameObject);
 	}
 

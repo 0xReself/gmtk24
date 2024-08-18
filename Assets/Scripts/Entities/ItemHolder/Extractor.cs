@@ -26,7 +26,7 @@ public class Extractor : ItemHolder
 		}
 	}
 
-	void Start() {
+	override protected void onStart() {
 		Placeable placeable = GetComponent<Placeable>();
 
 		Vector2Int corePosition = getInputRotation(placeable.rotation);

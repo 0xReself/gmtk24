@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -33,6 +34,7 @@ public class ItemHolder : MonoBehaviour
 	}
 
 	private static MapManager mapManager;
+	private static ItemManager itemManager;
 
 	[SerializeField]
 	// this returns an array with the side configuration from left to right with the default rotation! 
@@ -47,15 +49,18 @@ public class ItemHolder : MonoBehaviour
 	// cached to cycle through output sides
 	private int currentOutputSide = 0;
 
+	// set to true on start and to false again on delete
+	private bool alive = false;
+
 	[SerializeField]
-	// Maximum amount of items this entity can contain at the same time 
-	private int maxItems = 0;
+	// Maximum amount of items this entity can contain at the same time. for crafters this is a multiplier to the recipe output count and does not affect the input items!!!!
+	protected int maxItems = 0;
 
 	[SerializeField]
 	// how fast the item holder processes the item (also depends on the items processing time) 
-	private int processingSpeed = 0;
+	protected int processingSpeed = 0;
 
-	// the items currently inside of this itemholder
+	// the items currently inside of this itemholder. (for crafters this is the input item queue)
 	protected List<Item> items = new List<Item> { };
 
 	// returns the connection side configuration with the current rotation
@@ -91,7 +96,7 @@ public class ItemHolder : MonoBehaviour
 	public virtual bool canAcceptItem(Item item, int connectionSidePosition, ItemHolder otherHolder)
 	{
 		ConnectionSide side = getConnectionSides()[connectionSidePosition];
-		return items.Count < maxItems && side <= ConnectionSide.input; // all input kinds, also [ConnectionSide.sideInput] !!!!!!
+		return alive && isInputFull() == false && side <= ConnectionSide.input; // all input kinds, also [ConnectionSide.sideInput] !!!!!!
 	}
 
 	// An item is given to this item holder (sub class can add custom behaviour, but must return super.acceptItem)
@@ -112,7 +117,7 @@ public class ItemHolder : MonoBehaviour
 	// the itemprefab will also be instantiated at the current position of this itemHolder
 	public bool spawnItem(GameObject itemPrefab, bool isVisible)
 	{
-		if (items.Count > maxItems || itemPrefab == null)
+		if (isOutputFull() || itemPrefab == null)
 		{
 			return false;
 		}
@@ -135,8 +140,15 @@ public class ItemHolder : MonoBehaviour
 		return true;
 	}
 
-	// cycles through the output sides of the current item holder. this returns -1 if there are no output sides at all
-	public int getNextOutputSide()
+	// same as spawnItem, but uses ItemManager to look up the prefab for the item class
+	public bool spawnItemClass(Type itemClass, bool isVisible)
+	{
+		return spawnItem(getItemManager().getItemPrefab(itemClass), isVisible);
+	}
+
+	// per default cycles through the output sides of the current item holder. this returns -1 if there are no output sides at all
+	// can be adjusted 
+	public virtual int getNextOutputSide()
 	{
 		ConnectionSide[] connections = getConnectionSides();
 		currentOutputSide++;
@@ -218,7 +230,7 @@ public class ItemHolder : MonoBehaviour
 	// per default this just circles through the connection output sides if there is a connected holder on that side!!!). returns the holder with the connection side index!
 	//
 	// can also be overridden in subclass, but it would be better to override processItems instead
-	public virtual TargetInformation getNextOutputItemHolder()
+	public virtual TargetInformation getNextOutputItemHolder(Item item)
 	{
 		Placeable placeable = getPlaceable();
 		int size = placeable.GetSize();
@@ -241,7 +253,7 @@ public class ItemHolder : MonoBehaviour
 			if (otherPlaceable != null && otherPlaceable.isAlive())
 			{
 				int otherInputPos = calculateOtherInputPos(direction, steps, size, position, otherPlaceable);
-				if (items.Count > 0 && otherHolder.canAcceptItem(items.ElementAt(0), otherInputPos, this))
+				if (item != null && otherHolder.canAcceptItem(item, otherInputPos, this))
 				{
 					return new TargetInformation(otherHolder, outputSide, otherInputPos);
 				}
@@ -253,7 +265,7 @@ public class ItemHolder : MonoBehaviour
 	// can be overridden if for example this item holder needs at least n and m items of a specific type to be able to process 
 	public virtual bool canProcessItems()
 	{
-		return true; 
+		return alive; 
 	}
 
 	// process all items in this item holder (sub class can add custom behaviour instead of this to process all items!)
@@ -294,9 +306,9 @@ public class ItemHolder : MonoBehaviour
 	// used in update to recalculate and initially when accepting the item
 	//
 	// calls getNextOutputItemHolder and THIS MAY SET THE target of the item to null if there is no valid holder connected!
-	private void resetTargetForItem(Item item)
+	protected void resetTargetForItem(Item item)
 	{
-		TargetInformation info = getNextOutputItemHolder();
+		TargetInformation info = getNextOutputItemHolder(item);
 		if (info != null)
 		{
 			item.setNewTarget(info.targetHolder, info.myOutputSide, info.otherInputSide);
@@ -308,20 +320,43 @@ public class ItemHolder : MonoBehaviour
 		}
 	}
 
+	// per default compares item count with max items and is used in canAcceptItem
+	protected virtual bool isInputFull()
+	{
+		return items.Count >= maxItems;
+	}
+
+	// per default compares item count with max items and is used in spawnItem
+	protected virtual bool isOutputFull()
+	{
+		return items.Count >= maxItems; 
+	}
+
+
 	// this is called when the placeable accosiated with this item holder is destroyed/deleted 
 	//
 	// OVERRIDE THIS IN A SUB CLASS, BUT CALL THE SUPER METHOD! 
 	public virtual void onDelete()
 	{
-		foreach(Item item in items)
+		alive = false;
+		for (int i = 0; i<items.Count; ++i)
 		{
-			item.delete();
+			items.ElementAt(i--).delete();
 		}
 		items.Clear();
 	}
 
+	public void removeItem(Item item)
+	{
+		if(items.Contains(item))
+		{
+			items.Remove(item);
+		}
+	}
+
 	void Start()
 	{
+		alive = true;
 		onStart();
 	}
 
@@ -346,6 +381,15 @@ public class ItemHolder : MonoBehaviour
 			mapManager = GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>(); // buggy, why unity? 
 		}
 		return mapManager;
+	}
+
+	public static ItemManager getItemManager()
+	{
+		if (itemManager == null)
+		{
+			itemManager = GameObject.FindGameObjectWithTag("ItemManager").GetComponent<ItemManager>(); 
+		}
+		return itemManager;
 	}
 
 	public static ItemHolder getItemHolderAt(Vector2Int targetPos)
@@ -378,5 +422,10 @@ public class ItemHolder : MonoBehaviour
 		}
 		return GetType().Name + "{itemCount: " + items.Count + ", current output: " + currentOutputSide + " of " +
 			string.Join(",", getConnectionSides()) + ", processingSpeed: " + processingSpeed + ", maxItems: " + maxItems +  ", position: " + placeable.startPosition + "}";
+	}
+
+	public bool isAlive()
+	{
+		return alive;
 	}
 }

@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 1761733761880910958}
   - component: {fileID: 1000586696892187106}
   - component: {fileID: 8583182749874020032}
+  - component: {fileID: -6246659529695034421}
   m_Layer: 0
   m_Name: Purifier
   m_TagString: Untagged
@@ -318,3 +319,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-6246659529695034421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732090125897960743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41c3559abebba948a0ff662f7a158ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultConnections: 0100000001000000010000000300000003000000010000000100000001000000
+  maxItems: 1
+  processingSpeed: 50
