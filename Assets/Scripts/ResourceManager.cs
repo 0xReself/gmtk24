@@ -126,9 +126,10 @@ public class ResourceManager : MonoBehaviour {
 				return true;
 
 			case Resource.ALL:
-				azuriteEssence -= amount;
-				azuriteEssence -= amount;
-				azuriteEssence -= amount;
+				amethystEssence -= amount;
+				emberEssence -= amount;
+				crimsonEssence -= amount;
+				moonlightEssence -= amount;
 				azuriteEssence -= amount;
 				return true;
 
