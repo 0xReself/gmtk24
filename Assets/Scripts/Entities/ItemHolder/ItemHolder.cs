@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -33,6 +34,7 @@ public class ItemHolder : MonoBehaviour
 	}
 
 	private static MapManager mapManager;
+	private static ItemManager itemManager;
 
 	[SerializeField]
 	// this returns an array with the side configuration from left to right with the default rotation! 
@@ -48,14 +50,14 @@ public class ItemHolder : MonoBehaviour
 	private int currentOutputSide = 0;
 
 	[SerializeField]
-	// Maximum amount of items this entity can contain at the same time 
-	private int maxItems = 0;
+	// Maximum amount of items this entity can contain at the same time. for crafters this is a multiplier to the recipe output count and does not affect the input items!!!!
+	protected int maxItems = 0;
 
 	[SerializeField]
 	// how fast the item holder processes the item (also depends on the items processing time) 
-	private int processingSpeed = 0;
+	protected int processingSpeed = 0;
 
-	// the items currently inside of this itemholder
+	// the items currently inside of this itemholder. (for crafters this is the input item queue)
 	protected List<Item> items = new List<Item> { };
 
 	// returns the connection side configuration with the current rotation
@@ -133,6 +135,12 @@ public class ItemHolder : MonoBehaviour
 		item.moveToTarget();
 		Debug.Log("New Item spawned: " + item.ToString());
 		return true;
+	}
+
+	// same as spawnItem, but uses ItemManager to look up the prefab for the item class
+	public bool spawnItemClass(Type itemClass, bool isVisible)
+	{
+		return spawnItem(getItemManager().getItemPrefab(itemClass), isVisible);
 	}
 
 	// cycles through the output sides of the current item holder. this returns -1 if there are no output sides at all
@@ -294,7 +302,7 @@ public class ItemHolder : MonoBehaviour
 	// used in update to recalculate and initially when accepting the item
 	//
 	// calls getNextOutputItemHolder and THIS MAY SET THE target of the item to null if there is no valid holder connected!
-	private void resetTargetForItem(Item item)
+	protected void resetTargetForItem(Item item)
 	{
 		TargetInformation info = getNextOutputItemHolder();
 		if (info != null)
@@ -346,6 +354,15 @@ public class ItemHolder : MonoBehaviour
 			mapManager = GameObject.FindGameObjectWithTag("MapManager").GetComponent<MapManager>(); // buggy, why unity? 
 		}
 		return mapManager;
+	}
+
+	public static ItemManager getItemManager()
+	{
+		if (itemManager == null)
+		{
+			itemManager = GameObject.FindGameObjectWithTag("ItemManager").GetComponent<ItemManager>(); 
+		}
+		return itemManager;
 	}
 
 	public static ItemHolder getItemHolderAt(Vector2Int targetPos)
