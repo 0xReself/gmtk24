@@ -9,15 +9,26 @@ public class MapManager : MonoBehaviour {
     private GameObject corePrefab;
 
     [SerializeField]
+    private GameObject sinkPrefab;
+
+    [SerializeField]
     private Dictionary<Vector2Int, GameObject> map;
 
     void Start() {
         map = new Dictionary<Vector2Int, GameObject>();
+        //Set Core
         GameObject placedCore = Instantiate(corePrefab, new Vector2(-1.5f, 1.5f), Quaternion.identity);
-        Placeable placeable = placedCore.GetComponent<Placeable>();
-        placeable.startPosition = new Vector2Int(-1, 1);
+        Placeable placeableCore = placedCore.GetComponent<Placeable>();
+        placeableCore.startPosition = new Vector2Int(-1, 1);
 
-        Set(placedCore, placeable.startPosition, placeable.GetEndPosition(placeable.startPosition));
+        Set(placedCore, placeableCore.startPosition, placeableCore.GetEndPosition(placeableCore.startPosition));
+
+        //Set Core
+        GameObject placedSink = Instantiate(sinkPrefab, new Vector2(30.5f, 2.5f), Quaternion.identity);
+        Placeable placeableSink = placedSink.GetComponent<Placeable>();
+        placeableSink.startPosition = new Vector2Int(30, 2);
+
+        Set(placedSink, placeableSink.startPosition, placeableSink.GetEndPosition(placeableSink.startPosition));
     }
 
     void Update() {}

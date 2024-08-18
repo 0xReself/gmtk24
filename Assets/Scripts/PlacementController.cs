@@ -37,6 +37,12 @@ public class PlacementController : MonoBehaviour {
     [SerializeField]
     private AudioSource deleteSound;
 
+    [SerializeField]
+    private GameObject lastGameObject;
+
+    [SerializeField]
+    private GameObject lastGameObjectClicked;
+
     void Start() {
         cameraController = this.GetComponent<CameraController>();
     }
@@ -133,6 +139,44 @@ public class PlacementController : MonoBehaviour {
         }
     }
 
+    private void HandleHoverAndClick() {
+        //OnHover
+        GameObject objectHovered = mapManager.Get(ToVector2Int(cameraController.GetGridPosition()));
+        if (objectHovered != lastGameObject) {
+            if(lastGameObject != null) {
+                Placeable lastPlaceable = lastGameObject.GetComponent<Placeable>();
+                lastPlaceable.OnHoverEnd();
+            }
+            
+            if (objectHovered != null) {
+                Placeable newPlaceable = objectHovered.GetComponent<Placeable>();
+                newPlaceable.OnHoverStart();
+            }
+
+            lastGameObject = objectHovered;
+        }
+
+        //OnClick
+        if (Input.GetKeyDown(KeyCode.Mouse0)) {
+            GameObject objectClicked = mapManager.Get(ToVector2Int(cameraController.GetGridPosition()));
+            if(objectClicked != null) {
+                lastGameObjectClicked = objectClicked;
+                Placeable placeable = objectClicked.GetComponent<Placeable>();
+                placeable.OnClickDown();
+            } else {
+                lastGameObjectClicked = null;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse0)) {
+            if(lastGameObjectClicked != null) {
+                Placeable placeable = lastGameObjectClicked.GetComponent<Placeable>();
+                placeable.OnClickUp();
+                lastGameObjectClicked = null;
+            }
+        }
+    }
+
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             ChangeSelectedPlaceable(null, PlacingMode.Idle);
@@ -152,20 +196,8 @@ public class PlacementController : MonoBehaviour {
             HandleDelete();
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && placingMode == PlacingMode.Idle) {
-            GameObject objectClicked = mapManager.Get(ToVector2Int(cameraController.GetGridPosition()));
-            if(objectClicked != null) {
-                Placeable placeable = objectClicked.GetComponent<Placeable>();
-                placeable.OnClickDown();
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.Mouse0) && placingMode == PlacingMode.Idle) {
-            GameObject objectClicked = mapManager.Get(ToVector2Int(cameraController.GetGridPosition()));
-            if(objectClicked != null) {
-                Placeable placeable = objectClicked.GetComponent<Placeable>();
-                placeable.OnClickUp();
-            }
+        if (placingMode == PlacingMode.Idle) {
+            HandleHoverAndClick();
         }
     }
 }

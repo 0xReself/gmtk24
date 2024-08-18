@@ -66,6 +66,9 @@ public class Placeable : MonoBehaviour {
     public virtual void OnClickDown() {}
     public virtual void OnClickUp() {}
 
+    public virtual void OnHoverStart() {}
+    public virtual void OnHoverEnd() {}
+
     public void Rotate() {
         if (topLayer == null) {
             return;

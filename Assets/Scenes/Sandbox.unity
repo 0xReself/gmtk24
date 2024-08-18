@@ -2853,6 +2853,8 @@ MonoBehaviour:
   placingMode: 0
   disabled: 0
   deleteSound: {fileID: 519420035}
+  lastGameObject: {fileID: 0}
+  lastGameObjectClicked: {fileID: 0}
 --- !u!82 &519420035
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9407,6 +9409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   corePrefab: {fileID: 6732090125897960743, guid: 40e09665b5d219f4fa16c1f67ce4d6e8, type: 3}
+  sinkPrefab: {fileID: 6732090125897960743, guid: 91a13e53a039103489cb274ab968ae2f, type: 3}
 --- !u!4 &1713368900
 Transform:
   m_ObjectHideFlags: 0
