@@ -338,6 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34c46d1410d5bc4da387b3d6465251d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultConnections: 01000000010000000200000001000000
+  defaultConnections: 01000000000000000300000000000000
   maxItems: 1
   processingSpeed: 100

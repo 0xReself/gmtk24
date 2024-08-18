@@ -19,8 +19,13 @@ public class ItemHolder : MonoBehaviour
 	// a side can be closed, or input, or output
 	public enum ConnectionSide
 	{
-		closed,
+		// IMPORTANT: belts can have multiple side inputs that are ignored by a splitter, but not by other stuff
+		sideInput,
+		// the input for everything
 		input,
+		// no connection
+		closed,
+		// output for everything
 		output,
 	}
 
@@ -95,7 +100,8 @@ public class ItemHolder : MonoBehaviour
 	// or crafting machines may only accept specific items
 	public virtual bool canAcceptItem(Item item, int connectionSidePosition, ItemHolder otherHolder)
 	{
-		return items.Count < maxItems && getConnectionSides()[connectionSidePosition] == ConnectionSide.input;
+		ConnectionSide side = getConnectionSides()[connectionSidePosition];
+		return items.Count < maxItems && side <= ConnectionSide.input; // all input kinds, also [ConnectionSide.sideInput] !!!!!!
 	}
 
 	// An item is given to this item holder (sub class can add custom behaviour, but must return super.acceptItem)

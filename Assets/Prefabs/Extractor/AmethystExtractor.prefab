@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819699b457066e24baee6d16f20c4c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultConnections: 00000000000000000200000000000000
+  defaultConnections: 01000000020000000300000002000000
   maxItems: 1
   processingSpeed: 50
   itemPrefab: {fileID: 6732090125897960743, guid: 18797153958b7d44e8a4538c7e43e9f7, type: 3}
