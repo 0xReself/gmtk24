@@ -157,14 +157,15 @@ public class ItemHolder : HolderBase
 	//
 	// otherwise returns false if the holder has no space for the item
 	//
-	// the itemprefab will also be instantiated at the current position of this itemHolder
-	public virtual bool spawnItem(GameObject itemPrefab, bool isVisible)
+	// the itemprefab will also be instantiated at the current MIDDLE POSITION of this itemHolder to display the item! (see getMiddlePos) 
+	// the initial z position of the item (in the 3d vector) can also be set additionally
+	public virtual bool spawnItem(GameObject itemPrefab, bool isVisible, float itemZPos = 0)
 	{
 		if (isOutputFull() || itemPrefab == null)
 		{
 			return false;
 		}
-		GameObject newItem = Instantiate(itemPrefab, transform.position, Quaternion.identity);
+		GameObject newItem = Instantiate(itemPrefab, new Vector3(getMiddlePos().x, getMiddlePos().y, itemZPos), Quaternion.identity);
 		if (isVisible == false)
 		{
 			newItem.GetComponent<Renderer>().enabled = false;
@@ -190,19 +191,19 @@ public class ItemHolder : HolderBase
 	}
 
 	// same as spawnItem, but uses ItemManager to look up the prefab for the item class
-	public bool spawnItemClass(Type itemClass, bool isVisible)
+	public bool spawnItemClass(Type itemClass, bool isVisible, float itemZPos = 0)
 	{
-		return spawnItem(getItemManager().getItemPrefab(itemClass), isVisible);
+		return spawnItem(getItemManager().getItemPrefab(itemClass), isVisible, itemZPos);
 	}
 
 	public override string ToString()
 	{
-		Placeable placeable = getPlaceable();
-		if (placeable == null)
+		if (getPlaceable() == null)
 		{
 			Debug.LogError("trying to log a item holder that did not have a placeable attached");
+			return GetType().Name + "{INVALID}";
 		}
 		return GetType().Name + "{itemCount: " + items.Count + base.ToString() + " of " +
-			string.Join(",", getConnectionSides()) + ", processingSpeed: " + processingSpeed + ", maxItems: " + maxItems +  ", position: " + placeable.startPosition + "}";
+			string.Join(",", getConnectionSides()) + ", processingSpeed: " + processingSpeed + ", maxItems: " + maxItems +  ", position: " + getTopLeftCorner() + "}";
 	}
 }

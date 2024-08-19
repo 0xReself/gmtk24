@@ -127,6 +127,7 @@ public class Crafter : ItemHolder
 		}
 	}
 
+	// overridden to compare with recipe outputs 
 	public override int getTargetOutputSideForItem(Item item)
 	{
 		List<int> targetSides = recipe.getOutputSideForItem(item);
@@ -138,12 +139,13 @@ public class Crafter : ItemHolder
 		ConnectionSide[] connections = getConnectionSides();
 		for (int i = 0; i < connections.Length; ++i)
 		{
+			// IMPORTANT: the connection sides of recipes of course need to be shifted to match the connection sides! 
 			if (connections[i] == ConnectionSide.output && i == shiftConnectionSide(targetSide, connections.Length))
 			{
 				return i;
 			}
 		}
-		Debug.LogError("crafter " + this + " did not find a target for the item " + item + " sides: " + targetSides + " and connections: " + connections);
+		Debug.LogError("crafter " + this + " did not find a target for the item " + item + " sides: " + string.Join(",", targetSides) + " and connections: " + string.Join(",", connections));
 		return -1;
 	}
 
