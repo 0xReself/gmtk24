@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Merger : ItemHolder
 {
+
+	// the target next holder which can only supply to this ( when set to -1, it accepts all holders) 
+	private int nextHolderNum = -1;
+
 	// queue of holders that want to send items to this from different sides (will cycle through them)
 	private List<ItemHolder> pendingHolders = new List<ItemHolder>();
-	private int nextInput = 0;
 
 	public override bool canAcceptItem(Item item, int connectionSidePosition, ItemHolder otherHolder)
 	{
@@ -15,34 +19,51 @@ public class Merger : ItemHolder
 			if (pendingHolders.Contains(otherHolder) == false) { 
 				pendingHolders.Add(otherHolder);
 			}
+			int myPosition = 0;
 			for (int i = 0; i < pendingHolders.Count; i++)
 			{
 				ItemHolder holder = pendingHolders[i];
 				if(holder.isAlive() == false)
 				{
-					pendingHolders.RemoveAt(i--);
-					nextInput--;
-					if (nextInput <= 0)
+					if (nextHolderNum == i)
 					{
-						nextInput = 0; 
+						nextHolderNum = -1; 
 					}
-					continue;
+					else if(nextHolderNum > i)
+					{
+						nextHolderNum--;
+					}
+					pendingHolders.RemoveAt(i--);
 				}
-				if(holder == otherHolder && nextInput != i)
+				else if(holder == otherHolder )
 				{
-					return false;
+					myPosition = i;
+					if (nextHolderNum >= 0 && nextHolderNum != myPosition)
+					{
+						return false;
+					}
 				}
-			}
+            }
 
+		} 
+		else
+		{
+			return false; 
 		}
 		bool canAccept = base.canAcceptItem(item, connectionSidePosition, otherHolder);
         if (canAccept)
         {
-			nextInput++;
-			if (nextInput >= pendingHolders.Count)
+			for (int i = nextHolderNum + 1; i < pendingHolders.Count + nextHolderNum; i++)
 			{
-				nextInput = 0;
+				int index = i % pendingHolders.Count;
+				ItemHolder holder = pendingHolders[index];
+				if (holder.isAlive() && holder.containsOneOutputItem())
+				{
+					nextHolderNum = index;
+					return canAccept;
+				}
 			}
+			nextHolderNum = -1;
 		}
 		return canAccept;
 	}
