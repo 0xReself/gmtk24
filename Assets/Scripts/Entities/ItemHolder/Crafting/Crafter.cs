@@ -69,7 +69,7 @@ public class Crafter : ItemHolder
 				base.resetTargetForItem(item); // FOR THE NEW OUTPUT ITEMS USE THE BASE CLASS FUNCTION TO RESET THE TARGET 
 			}
 
-			if (item.canBeProcessed())
+			if (item.canBeProcessed() && item.hasTarget() && item.canMoveToTarget())
 			{
 				item.process(processingSpeed * Time.deltaTime);
 				playProcessingAnimation(item);
@@ -204,7 +204,7 @@ public class Crafter : ItemHolder
 	// this can change the behaviour how the newly spawned item is added to this if overridden in a subclass
 	protected override void addSpawnedItem(Item item)
 	{
-		item.setSource(this, 0, -1, 0, 10.0f); // here the item has a very very short remaining processing time, because it affecs the delay it stays inside of the crafter
+		item.setSource(this, 0, -1, 0, item.getMaxProcessingTime());
 		outputItems.Add(item);
 		playSpawnAnimation(item);
 	}
