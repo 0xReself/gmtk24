@@ -57,9 +57,7 @@ public class Crafter : ItemHolder
 			if (item.canBeProcessed())
 			{
 				item.process(processingSpeed * Time.deltaTime);
-				// todo: temp for testing, maybe instantly make them vanish? 
-				item.transform.position = Vector3.Lerp(item.transform.position, getMiddlePos(), processingSpeed / 10.0f * Time.deltaTime);
-
+				playProcessingAnimation(item);
 			}
 		}
 
@@ -74,9 +72,7 @@ public class Crafter : ItemHolder
 			if (item.canBeProcessed())
 			{
 				item.process(processingSpeed * Time.deltaTime);
-				// todo: temp for testing, maybe instantly spawn them on the next belt? 
-				item.transform.position = Vector3.Lerp(item.transform.position, getMiddlePos(), processingSpeed / 10.0f * Time.deltaTime);
-
+				playProcessingAnimation(item);
 			}
 			if (item.isProcessed())
 			{
@@ -108,7 +104,13 @@ public class Crafter : ItemHolder
 	private void process()
 	{
 		remainingProcessTime -= processingSpeed * Time.deltaTime;
-		// todo: maybe play some animation while crafting? 
+		playCraftingAnimation();
+	}
+
+	// this is called periodically while the crafter is crafting
+	protected virtual void playCraftingAnimation()
+	{
+
 	}
 
 	// this also needs to reset everything
@@ -202,9 +204,9 @@ public class Crafter : ItemHolder
 	// this can change the behaviour how the newly spawned item is added to this if overridden in a subclass
 	protected override void addSpawnedItem(Item item)
 	{
-		Debug.Log("OUTPUT ITEM ADDED  " + item);
-		item.setSource(this, 0, -1, 0, 10.0f); // todo: very very short remaining processing time / delay? 
+		item.setSource(this, 0, -1, 0, 10.0f); // here the item has a very very short remaining processing time, because it affecs the delay it stays inside of the crafter
 		outputItems.Add(item);
+		playSpawnAnimation(item);
 	}
 
 	public override void onDelete()

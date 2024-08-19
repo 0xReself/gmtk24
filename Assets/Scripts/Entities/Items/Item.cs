@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Item : MonoBehaviour
 {
@@ -19,25 +20,28 @@ public class Item : MonoBehaviour
 
 	// input of current holder where item came from
 	private int inputSide = 0;
-	// output of current holder where item goes to
+	// output of current holder where item goes to the next holder
 	private int outputSide = 0;
-	// connected to the output side, is the input side of the target
+	// connected to the output side, is the input side of the target holder where the item goes to next (can be 0 if unknown)
 	private int connectedTargetInputSide = 0;
-
 
 	// resets the processing time of this item (when it arrives at a new item holder). and shifts from current to next item holder 
 	//
 	// this also calls acceptitem on the next holder which also calls setNewTarget
 	public void moveToTarget()
 	{
-		setSource(nextOutputHolder, connectedTargetInputSide, 0, 0, processingTime);
-		if(currentHolder== null)
+		if(nextOutputHolder == null)
 		{
 			Debug.LogError("Item did not have a next holder");
 			delete();
 		}
 		else
 		{
+			if(currentHolder!= null)
+			{
+				currentHolder.playStartMoveAnimation(this);
+			}
+			setSource(nextOutputHolder, connectedTargetInputSide, 0, 0, processingTime);
 			currentHolder.acceptItem(this, connectedTargetInputSide);
 		}
 	}
@@ -52,7 +56,7 @@ public class Item : MonoBehaviour
 
 	// as an alternative to calling setnewtarget and movetotarget twice, this explecitly sets a source for the item (used in crafter, because it has a different item queue)
 	// per default inputside should be 0 and outputside -1   and the connectedtargetinputside is 0
-	// the remainingProcessingTime can also be overridden here!
+	// the remainingProcessingTime can also be overridden here! 
 	public void setSource(ItemHolder source, int inputSide, int outputside, int connectedTargetInputSide, float remainingProcessingTime)
 	{
 		this.remainingProcessingTime = remainingProcessingTime;
@@ -168,4 +172,40 @@ public class Item : MonoBehaviour
 		return GetType().Name + "{current holder: " + current + ", next holder: " + target + ", remainingProcessingTime: " + 
 			remainingProcessingTime + ", inputSide: " + inputSide + ", outputSide: " + outputSide + ", connectedTargetInputSide: " + connectedTargetInputSide +  "}";
 	}
+
+	public float getMaxProcessingTime()
+	{
+		return processingTime;
+	}
+
+	// returns a percentage from 0 to 1 on how far the item is processed
+	public float getProgress()
+	{
+		return 1.0f - (remainingProcessingTime / processingTime);
+	}
+
+	public Vector3 getTargetPos()
+	{
+		if(nextOutputHolder != null)
+		{
+			return nextOutputHolder.getMiddlePos();
+		}
+		if (currentHolder != null)
+		{
+			return currentHolder.getMiddlePos(); // this happens if an item is processing without a target (for example full belt, or no connection, etc)
+		}
+		Debug.Log("item could not return correct target pos " + this);
+		return transform.position;
+	}
+
+	public Vector3 getSourcePos()
+	{
+		if (currentHolder != null)
+		{
+			return currentHolder.getMiddlePos(); 
+		}
+		Debug.Log("item could not return correct source pos " + this);
+		return transform.position;
+	}
+
 }

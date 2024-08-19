@@ -21,9 +21,7 @@ public class SinkHolder : ItemHolder
 			if (item.canBeProcessed())
 			{
 				item.process(processingSpeed * Time.deltaTime);
-				// todo: temp for testing
-				item.transform.position = Vector3.Lerp(item.transform.position, getMiddlePos(), processingSpeed / 10.0f * Time.deltaTime);
-
+				playProcessingAnimation(item);
 			}
 			if (item.isProcessed())
 			{

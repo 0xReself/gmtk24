@@ -43,6 +43,7 @@ public class ItemHolder : HolderBase
 	//
 	// this calls otherHolder.acceptItem and removes the item from this holder. also calls resetTargetForItem for those with no target periodically
 	//
+	// PER DEFAULT ITEMS ARE ONLY PROCESSED IF THEY HAVE A TARGET!!!
 	// for example an override would destroy input items instead of moving them along 
 	public virtual void processItems()
 	{
@@ -54,12 +55,10 @@ public class ItemHolder : HolderBase
 				resetTargetForItem(item);
 			}
 
-			if (item.canBeProcessed())
+			if (item.canBeProcessed() && item.hasTarget() && item.canMoveToTarget())
 			{
 				item.process(processingSpeed * Time.deltaTime);
-				// todo: temp for testing
-				item.transform.position = Vector3.Lerp(item.transform.position, getMiddlePos(), processingSpeed / 10.0f * Time.deltaTime);
-
+				playProcessingAnimation(item);
 			}
 			if (item.isProcessed())
 			{
@@ -183,17 +182,38 @@ public class ItemHolder : HolderBase
 		return true;
 	}
 
-	// this can change the behaviour how the newly spawned item is added to this if overridden in a subclass
+	// this can change the behaviour how the newly spawned item is added to this if overridden in a subclass.
+	// per default the items spawn animation is played, item is added to the list with its processing time 
 	protected virtual void addSpawnedItem(Item item)
 	{
-		item.setNewTarget(this, -1, 0);
-		item.moveToTarget();
+		item.setSource(this, 0, -1, 0, item.getMaxProcessingTime());
+		items.Add(item);
+		playSpawnAnimation(item);
 	}
 
 	// same as spawnItem, but uses ItemManager to look up the prefab for the item class
 	public bool spawnItemClass(Type itemClass, bool isVisible, float itemZPos = 0)
 	{
 		return spawnItem(getItemManager().getItemPrefab(itemClass), isVisible, itemZPos);
+	}
+
+	// called once when an item is spawned inside of an holder (it has no target yet, but its own holder as a source!) 
+	protected virtual void playSpawnAnimation(Item item)
+	{
+
+	}
+
+	// called once when an item is moving from its source to its target holder (before targeting is set and the target holder accepted this item) 
+	public virtual void playStartMoveAnimation(Item item)
+	{
+
+	}
+
+	// called periodically inside of the current itemholders progress function if the item can be progressed. its animating the move to the next target
+	protected virtual void playProcessingAnimation(Item item)
+	{
+		// todo: temp for testing, animation could be better
+		item.transform.position = Vector3.Lerp(item.getSourcePos(), item.getTargetPos(), item.getProgress());
 	}
 
 	public override string ToString()
@@ -205,5 +225,10 @@ public class ItemHolder : HolderBase
 		}
 		return GetType().Name + "{itemCount: " + items.Count + base.ToString() + " of " +
 			string.Join(",", getConnectionSides()) + ", processingSpeed: " + processingSpeed + ", maxItems: " + maxItems +  ", position: " + getTopLeftCorner() + "}";
+	}
+
+	public float getProcessingSpeed()
+	{
+		return processingSpeed;
 	}
 }
