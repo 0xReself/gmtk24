@@ -30,7 +30,7 @@ public class Extractor : ItemHolder
 		Placeable placeable = GetComponent<Placeable>();
 
 		Vector2Int corePosition = getInputRotation(placeable.rotation);
-		Vector2Int position = placeable.startPosition;
+		Vector2Int position = placeable.GetTilePosition();
 
 
 		GameObject coreObject = getMapManager().Get(position + corePosition);

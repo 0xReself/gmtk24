@@ -22,7 +22,7 @@ public class SinkHolder : ItemHolder
 			{
 				item.process(processingSpeed * Time.deltaTime);
 				// todo: temp for testing
-				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10.0f * Time.deltaTime);
+				item.transform.position = Vector3.Lerp(item.transform.position, getMiddlePos(), processingSpeed / 10.0f * Time.deltaTime);
 
 			}
 			if (item.isProcessed())

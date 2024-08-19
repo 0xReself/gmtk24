@@ -163,8 +163,13 @@ public class Placeable : MonoBehaviour {
         return size.x;
     }
 
-    // how many times they are rotated (0 to 3)
-    public int GetRotation() {
+	// returns the grid position of this placeable tile (1x1) (the real placement is 0.5 added to x and y so its in the middle of the square)
+	public Vector2Int GetTilePosition() {
+        return startPosition;
+	}
+
+	// how many times they are rotated (0 to 3)
+	public int GetRotation() {
         return rotation;
     }
 

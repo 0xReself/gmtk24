@@ -58,7 +58,7 @@ public class Crafter : ItemHolder
 			{
 				item.process(processingSpeed * Time.deltaTime);
 				// todo: temp for testing, maybe instantly make them vanish? 
-				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10.0f * Time.deltaTime);
+				item.transform.position = Vector3.Lerp(item.transform.position, getMiddlePos(), processingSpeed / 10.0f * Time.deltaTime);
 
 			}
 		}
@@ -75,7 +75,7 @@ public class Crafter : ItemHolder
 			{
 				item.process(processingSpeed * Time.deltaTime);
 				// todo: temp for testing, maybe instantly spawn them on the next belt? 
-				item.transform.position = Vector3.Lerp(item.transform.position, this.transform.position, processingSpeed / 10.0f * Time.deltaTime);
+				item.transform.position = Vector3.Lerp(item.transform.position, getMiddlePos(), processingSpeed / 10.0f * Time.deltaTime);
 
 			}
 			if (item.isProcessed())

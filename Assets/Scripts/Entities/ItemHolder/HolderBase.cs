@@ -385,10 +385,12 @@ public class HolderBase : MonoBehaviour
 		return ", current output: " + currentOutputSide;
 	}
 
-	// uses placeable to return start position! 
+	// uses placeable to return start position! returns a copy so that it can not modify the reference
+	// this is used to get other item holders next to it 
 	public Vector2Int getTopLeftCorner()
 	{
-		return getPlaceable().startPosition;
+		Vector2Int startPos = getPlaceable().GetTilePosition();
+		return new Vector2Int(startPos.x, startPos.y);
 	}
 
 	// just relays it to placeable, should be amount of tiles this occupies in each direction (so 1 for 1x1 and 2 for 2x2, etc)
@@ -397,9 +399,20 @@ public class HolderBase : MonoBehaviour
 		return getPlaceable().GetSize();
 	}
 
+	// converts from the top left corner position of a placeable to the middle pos of the placeable (they span to bottom right depending on size)
 	public Vector2 getMiddlePos()
 	{
-		return getPlaceable().startPosition; // TODO: EDIT 
+		int size = getSize();
+		Vector2Int startPos = getTopLeftCorner();
+		Vector2 target = new Vector2(startPos.x + 0.5f, startPos.y + 0.5f); // where the placeables are rendered (a bit distorted) 
+		if (size == 1)
+		{
+			return target;
+		}
+		float scale = size / 2.0f -0.5f;
+		target.x += scale;
+		target.y -= scale;
+		return target;
 	}
 
 	protected virtual bool canDebugLog()
