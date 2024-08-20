@@ -7085,7 +7085,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultConnections: 0100000001000000010000000300000003000000010000000100000001000000
   maxItems: 1
-  processingSpeed: 50
+  processingSpeed: 100
 --- !u!114 &8429388755067341964
 MonoBehaviour:
   m_ObjectHideFlags: 0

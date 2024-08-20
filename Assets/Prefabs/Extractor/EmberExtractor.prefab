@@ -335,6 +335,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultConnections: 02000000020000000300000002000000
   maxItems: 1
-  processingSpeed: 50
+  processingSpeed: 250
   itemPrefab: {fileID: 6732090125897960743, guid: 3d4e6989123a42e478772975f8b522f2, type: 3}
   ableToGenerate: 0

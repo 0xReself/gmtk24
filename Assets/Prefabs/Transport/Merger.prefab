@@ -335,4 +335,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultConnections: 01000000010000000300000001000000
   maxItems: 1
-  processingSpeed: 100
+  processingSpeed: 300

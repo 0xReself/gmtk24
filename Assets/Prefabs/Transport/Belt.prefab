@@ -312,6 +312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b22468f09777e504c8a2d6be56a56f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourcesToBuy: 
+  resourceAmount: 
   startPosition: {x: 0, y: 0}
   size: {x: 1, y: 1}
   rotation: 0
@@ -340,4 +342,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultConnections: 01000000000000000300000000000000
   maxItems: 1
-  processingSpeed: 100
+  processingSpeed: 150
